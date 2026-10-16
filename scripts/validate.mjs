@@ -12,7 +12,7 @@ const errors = [];
 const err = msg => errors.push(msg);
 
 // 1. SKILL.md frontmatter (Agent Skills spec: name <= 64 chars kebab-case matching folder, description <= 1024 chars).
-const skillMd = readFileSync(join(SKILL, 'SKILL.md'), 'utf8');
+const skillMd = readFileSync(join(SKILL, 'SKILL.md'), 'utf8').replace(/\r\n/g, '\n');
 const fm = skillMd.match(/^---\n([\s\S]*?)\n---\n/);
 if (!fm) err('SKILL.md: missing YAML frontmatter');
 else {

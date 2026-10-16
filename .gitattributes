@@ -1,0 +1,2 @@
+# Keep LF everywhere so SKILL.md frontmatter parses the same on every OS.
+* text=auto eol=lf
