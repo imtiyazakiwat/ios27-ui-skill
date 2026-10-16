@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## Unreleased
 
+## 0.2.0
+
+- Skill moved to `skills/ios27-ui/` (standard layout), so `npx skills add imtiyazakiwat/ios27-ui-skill` works and skills.sh can index it.
+- Claude Code plugin and marketplace manifests: `/plugin marketplace add imtiyazakiwat/ios27-ui-skill`.
+- Landing page on GitHub Pages with Open Graph card, structured data, sitemap and `llms.txt`.
+- README and npm metadata rewritten for search (description, keywords, FAQ, example prompts).
 - Community files: Code of Conduct, security policy, CODEOWNERS, feature template, Dependabot for Actions.
 - `main` and `v*` tags protected by rulesets; single `ci-ok` required check.
 

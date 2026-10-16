@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://imtiyazakiwat.github.io/ios27-ui-skill/sitemap.xml

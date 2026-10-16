@@ -1,0 +1,19 @@
+{
+  "name": "ios27-ui-skill",
+  "owner": {
+    "name": "Imtiyaz Akiwat",
+    "url": "https://github.com/imtiyazakiwat"
+  },
+  "metadata": {
+    "description": "iOS 27 / Liquid Glass UI skill for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "ios27-ui",
+      "source": "./",
+      "description": "Design, audit and build iOS 27 Liquid Glass screens following Apple's Human Interface Guidelines, in SwiftUI, React and Next.js.",
+      "category": "design",
+      "tags": ["ios", "liquid-glass", "swiftui", "react", "hig"]
+    }
+  ]
+}

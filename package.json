@@ -1,14 +1,14 @@
 {
   "name": "ios27-ui",
-  "version": "0.1.0",
-  "description": "Agent skill that makes AI coding agents (Claude Code, Kiro, Codex, Cursor, Windsurf, Copilot) design, audit and build iOS 27 Liquid Glass UIs following Apple's HIG.",
+  "version": "0.2.0",
+  "description": "iOS 27 Liquid Glass UI skill for AI coding agents (Claude Code, Cursor, Codex, Kiro, Copilot, Windsurf): design, audit and build Apple HIG screens in SwiftUI, React and Next.js.",
   "type": "module",
   "bin": {
     "ios27-ui": "bin/cli.mjs"
   },
   "files": [
     "bin",
-    "skill",
+    "skills",
     "adapters"
   ],
   "scripts": {
@@ -20,24 +20,37 @@
   },
   "keywords": [
     "agent-skill",
+    "agent-skills",
+    "skill-md",
     "skills",
     "claude-code",
     "claude-skill",
-    "kiro",
-    "codex",
+    "claude-code-plugin",
     "cursor",
-    "windsurf",
+    "cursor-rules",
+    "codex",
+    "kiro",
     "copilot",
+    "github-copilot",
+    "windsurf",
+    "ai-agents",
     "ios",
+    "ios26",
     "ios27",
     "liquid-glass",
+    "apple",
+    "apple-hig",
     "human-interface-guidelines",
     "hig",
     "swiftui",
+    "uikit",
     "react",
     "nextjs",
     "ui",
-    "design-system"
+    "ui-design",
+    "design-system",
+    "design-tokens",
+    "ios-design"
   ],
   "author": "Imtiyaz Akiwat",
   "license": "MIT",
@@ -48,7 +61,7 @@
   "bugs": {
     "url": "https://github.com/imtiyazakiwat/ios27-ui-skill/issues"
   },
-  "homepage": "https://github.com/imtiyazakiwat/ios27-ui-skill#readme",
+  "homepage": "https://imtiyazakiwat.github.io/ios27-ui-skill/",
   "publishConfig": {
     "access": "public",
     "provenance": true

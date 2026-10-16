@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const PKG = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
 const SKILL_NAME = 'ios27-ui';
-const SKILL_SRC = join(ROOT, 'skill', SKILL_NAME);
+const SKILL_SRC = join(ROOT, 'skills', SKILL_NAME);
 const RULES_BODY = join(ROOT, 'adapters', 'rules.md');
 const GLOBS = '**/*.tsx,**/*.jsx,**/*.css,**/*.vue,**/*.svelte,**/*.swift';
 const DESCRIPTION =
