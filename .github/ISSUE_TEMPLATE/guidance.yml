@@ -1,0 +1,24 @@
+name: Guidance is wrong or missing
+description: A rule, metric or pattern that doesn't match how iOS 27 actually behaves
+labels: [guidance]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What the skill says (or is missing)
+      description: File and section, e.g. references/components.md → Sheets
+    validations:
+      required: true
+  - type: textarea
+    id: correct
+    attributes:
+      label: How iOS actually behaves
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: HIG link, WWDC session number, Apple docs, or a screenshot from a device
+    validations:
+      required: true

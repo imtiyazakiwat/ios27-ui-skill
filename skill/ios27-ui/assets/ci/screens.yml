@@ -1,0 +1,44 @@
+name: Device screenshots
+
+on:
+  push:
+    branches: ['main'] # change to your redesign branch
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  screens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build (offline, no Firestore)
+        run: npm run build
+        env:
+          NEXT_PUBLIC_OFFLINE: '1'
+      - name: Install Playwright WebKit
+        run: |
+          npm i --no-save playwright@1
+          npx playwright install --with-deps webkit
+      - name: Capture
+        run: |
+          npx next start -p 3000 &
+          npx --yes wait-on@8 http://localhost:3000 -t 60000
+          node scripts/ci-screenshots.mjs
+      - name: Publish screenshots
+        if: always()
+        run: |
+          cd shots
+          git init -q
+          git config user.name "ci"
+          git config user.email "ci@users.noreply.github.com"
+          git checkout -q -b ci-screenshots
+          git add .
+          git commit -q -m "screenshots ${GITHUB_SHA}"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" ci-screenshots

@@ -1,0 +1,142 @@
+/* iOS 27 design tokens — copy into your global stylesheet (:root + dark overrides + a11y media queries).
+   Remove the Tailwind import if you do not use Tailwind. Components live in the reference project (app/globals.css). */
+
+/* ==========================================================================
+   iOS 26/27 system design tokens
+   Colors follow UIKit semantic colors (iOS 26 palette). Liquid Glass is used
+   only for the floating navigation layer (bars, tab bar, menus, sheets),
+   never for content.
+   ========================================================================== */
+
+:root {
+  color-scheme: light dark;
+
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+
+  /* Layout metrics (pt) */
+  --nav-h: 52px;
+  --nav-top: max(var(--sat), 6px);
+  --tab-h: 62px;
+  --tab-bottom: max(calc(var(--sab) - 10px), 12px);
+  --content-bottom: calc(var(--tab-h) + var(--tab-bottom) + 28px);
+  --margin: 16px;
+  --radius-card: 26px;
+
+  /* Backgrounds */
+  --bg: #f2f2f7;
+  --cell: #ffffff;
+  --cell-2: #f2f2f7;
+  --pressed: #d1d1d6;
+  --bg-elevated: #f2f2f7;
+  --cell-elevated: #ffffff;
+  --pressed-elevated: #d1d1d6;
+
+  /* Labels */
+  --label: #000000;
+  --label-2: rgba(60, 60, 67, 0.6);
+  --label-3: rgba(60, 60, 67, 0.3);
+  --label-4: rgba(60, 60, 67, 0.18);
+  --separator: rgba(60, 60, 67, 0.29);
+
+  /* Fills */
+  --fill: rgba(120, 120, 128, 0.2);
+  --fill-2: rgba(120, 120, 128, 0.16);
+  --fill-3: rgba(118, 118, 128, 0.12);
+  --fill-4: rgba(116, 116, 128, 0.08);
+
+  /* System colors — iOS 26 */
+  --blue: #0088ff;
+  --green: #34c759;
+  --red: #ff383c;
+  --orange: #ff8d28;
+  --yellow: #ffcc00;
+  --indigo: #6155f5;
+  --purple: #cb30e0;
+  --teal: #00c3d0;
+  --cyan: #00c0e8;
+  --mint: #00c8b3;
+  --pink: #ff2d55;
+  --brown: #ac7f5e;
+  --gray: #8e8e93;
+  --tint: var(--blue);
+
+  /* Liquid Glass (iOS 27 tuning: stronger diffusion, darker rim, brighter specular) */
+  --glass-bg: rgba(255, 255, 255, 0.74);
+  --glass-thick: rgba(250, 250, 252, 0.92);
+  --glass-rim: rgba(0, 0, 0, 0.09);
+  --glass-spec: rgba(255, 255, 255, 0.95);
+  --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);
+  --glass-blur: 20px;
+  --lens: rgba(0, 0, 0, 0.07);
+  --dim: rgba(0, 0, 0, 0.32);
+
+  /* SF Pro on Apple devices; Inter (self-hosted via next/font) elsewhere. */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", var(--font-inter), "Inter", "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-rounded: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, var(--font-inter), "Inter", system-ui, sans-serif;
+
+  /* Motion */
+  --ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --cell: #1c1c1e;
+    --cell-2: #2c2c2e;
+    --pressed: #3a3a3c;
+    --bg-elevated: #1c1c1e;
+    --cell-elevated: #2c2c2e;
+    --pressed-elevated: #48484a;
+
+    --label: #ffffff;
+    --label-2: rgba(235, 235, 245, 0.6);
+    --label-3: rgba(235, 235, 245, 0.3);
+    --label-4: rgba(235, 235, 245, 0.16);
+    --separator: rgba(84, 84, 88, 0.6);
+
+    --fill: rgba(120, 120, 128, 0.36);
+    --fill-2: rgba(120, 120, 128, 0.32);
+    --fill-3: rgba(118, 118, 128, 0.24);
+    --fill-4: rgba(118, 118, 128, 0.18);
+
+    --blue: #0091ff;
+    --green: #30d158;
+    --red: #ff4245;
+    --orange: #ff9230;
+    --yellow: #ffd600;
+    --indigo: #6d7cff;
+    --purple: #db34f2;
+    --teal: #00d2e0;
+    --cyan: #3cd3fe;
+    --mint: #00dac3;
+    --pink: #ff375f;
+    --brown: #b78a66;
+
+    --glass-bg: rgba(38, 38, 42, 0.72);
+    --glass-thick: rgba(36, 36, 40, 0.94);
+    --glass-rim: rgba(0, 0, 0, 0.55);
+    --glass-spec: rgba(255, 255, 255, 0.16);
+    --glass-shadow: 0 10px 34px rgba(0, 0, 0, 0.55), 0 1px 4px rgba(0, 0, 0, 0.4);
+    --lens: rgba(255, 255, 255, 0.12);
+    --dim: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass-bg: var(--cell);
+    --glass-thick: var(--cell);
+    --glass-blur: 0px;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --label-2: rgba(60, 60, 67, 0.85);
+    --separator: rgba(60, 60, 67, 0.5);
+    --glass-rim: rgba(0, 0, 0, 0.3);
+  }
+}

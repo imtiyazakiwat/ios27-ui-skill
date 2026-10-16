@@ -1,0 +1,23 @@
+name: Installer bug
+description: npx ios27-ui did something unexpected
+labels: [bug]
+body:
+  - type: input
+    id: command
+    attributes:
+      label: Command you ran
+      placeholder: npx ios27-ui cursor --force
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output and what you expected
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: OS, Node version, ios27-ui version
+    validations:
+      required: true

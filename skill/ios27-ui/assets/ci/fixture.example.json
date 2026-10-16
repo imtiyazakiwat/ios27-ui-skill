@@ -1,0 +1,79 @@
+{
+  "trucks": [
+    {
+      "id": "TRK-01", "number": "MH 12 QX 4521", "model": "Tata Signa 4825.TK Heavy Hauler", "capacity": "35 Ton",
+      "status": "ontrip", "assignedDriverId": "DRV-01", "photo": "",
+      "fitnessExpiry": "18 Oct 2026", "insuranceExpiry": "02 Mar 2027", "permitExpiry": "15 Oct 2027",
+      "repairs": [
+        { "id": "R-101", "title": "Apollo 295/90R20 Tyre Pair", "cost": 38000, "date": "28 Sep 2026", "vendor": "National Tyre Hub", "notes": "Installed on 2nd axle left. S/N: AP-8829103" },
+        { "id": "R-102", "title": "Engine Oil & Filter Service", "cost": 8400, "date": "12 Sep 2026", "vendor": "Bombay Service Point", "notes": "Castrol Vecton 15W-40 20L" }
+      ]
+    },
+    {
+      "id": "TRK-02", "number": "MH 04 AB 8842", "model": "BharatBenz 3528C Heavy Tipper", "capacity": "28 Ton",
+      "status": "available", "assignedDriverId": "DRV-02", "photo": "https://example.invalid/broken-photo.jpg",
+      "fitnessExpiry": "14 Jan 2027", "insuranceExpiry": "19 Dec 2026", "permitExpiry": "28 Aug 2027",
+      "repairs": [{ "id": "R-103", "title": "Chassis Greasing & Washing", "cost": 1200, "date": "02 Oct 2026", "vendor": "Suhel Workshop", "notes": "" }]
+    },
+    {
+      "id": "TRK-03", "number": "GJ 06 ZZ 1994", "model": "Ashok Leyland 4220 HG Multi-Axle", "capacity": "32 Ton",
+      "status": "ontrip", "assignedDriverId": "DRV-03", "photo": "",
+      "fitnessExpiry": "24 Dec 2026", "insuranceExpiry": "08 Nov 2026", "permitExpiry": "11 Jun 2027",
+      "repairs": []
+    },
+    {
+      "id": "TRK-04", "number": "MH 14 EM 5519", "model": "Eicher Pro 6028 Trailer", "capacity": "26 Ton",
+      "status": "workshop", "assignedDriverId": null, "photo": "",
+      "fitnessExpiry": "05 Nov 2026", "insuranceExpiry": "14 Feb 2027", "permitExpiry": "30 Sep 2027",
+      "repairs": [{ "id": "R-105", "title": "Air Brake Booster Replacement", "cost": 9200, "date": "03 Oct 2026", "vendor": "Suhel Workshop", "notes": "Air valve leakage resolved" }]
+    }
+  ],
+  "drivers": [
+    {
+      "id": "DRV-01", "name": "ASLAM SANADI", "phone": "9901770863", "photo": "", "licenseNo": "KA28AB1968",
+      "assignedTruckId": "TRK-01", "baseSalary": 28000, "attendanceStatus": "Trip",
+      "attendanceHistory": ["Present", "Present", "Trip", "Trip", "Trip", "Trip", "Trip"],
+      "advances": [{ "id": "ADV-01", "amount": 5000, "date": "15 Sep 2026", "mode": "UPI", "purpose": "Family medical support" }],
+      "kharchList": [
+        { "id": "KHC-01", "amount": 1800, "date": "01 Oct 2026", "mode": "Cash", "purpose": "State border toll & weighbridge" },
+        { "id": "KHC-02", "amount": 650, "date": "03 Oct 2026", "mode": "Cash", "purpose": "Tyre puncture on highway" }
+      ]
+    },
+    {
+      "id": "DRV-02", "name": "Mohammad Irfan", "phone": "+91 97654 32190", "photo": "", "licenseNo": "MH-122016008741",
+      "assignedTruckId": "TRK-02", "baseSalary": 26000, "attendanceStatus": "Present",
+      "attendanceHistory": ["Present", "Present", "Present", "Present", "Present", "Present", "Present"],
+      "advances": [], "kharchList": []
+    },
+    {
+      "id": "DRV-03", "name": "RAMESH PAWAR", "phone": "9423011982", "photo": "", "licenseNo": "GJ-062014002341",
+      "assignedTruckId": "TRK-03", "baseSalary": 27500, "attendanceStatus": "Trip",
+      "attendanceHistory": ["Present", "Trip", "Trip", "Trip", "Trip", "Trip", "Trip"],
+      "advances": [{ "id": "ADV-03", "amount": 7000, "date": "10 Sep 2026", "mode": "Bank Transfer", "purpose": "House construction" }],
+      "kharchList": []
+    },
+    {
+      "id": "DRV-04", "name": "Aslam Sheikh", "phone": "8888277103", "photo": "", "licenseNo": "MH-042019003881",
+      "assignedTruckId": null, "baseSalary": 25000, "attendanceStatus": "Leave",
+      "attendanceHistory": ["Present", "Present", "Leave", "Leave", "Leave", "Leave", "Leave"],
+      "advances": [], "kharchList": []
+    }
+  ],
+  "trips": [
+    {
+      "id": "TRIP-8041", "truckId": "TRK-01", "driverId": "DRV-01", "from": "Bhiwandi, Mumbai", "to": "Nagpur MIDC",
+      "client": "Tata Steel Logistics", "freightAmount": 84000, "advanceFreightPaid": 45000, "balancePending": 39000,
+      "cargo": "Steel Coils (28 MT)", "status": "In Transit", "dispatchDate": "12 Oct 2026", "lrNumber": "LR-SR-9921"
+    },
+    {
+      "id": "TRIP-8042", "truckId": "TRK-03", "driverId": "DRV-03", "from": "JNPT Port, Nhava Sheva", "to": "Sanand, Ahmedabad",
+      "client": "Maersk Global Forwarding", "freightAmount": 62000, "advanceFreightPaid": 30000, "balancePending": 32000,
+      "cargo": "Automobile Assemblies", "status": "In Transit", "dispatchDate": "13 Oct 2026", "lrNumber": "LR-SR-9928"
+    },
+    {
+      "id": "TRIP-8039", "truckId": "TRK-02", "driverId": "DRV-02", "from": "Pune", "to": "Surat",
+      "client": "Reliance Retail", "freightAmount": 41000, "advanceFreightPaid": 41000, "balancePending": 0,
+      "cargo": "FMCG cartons", "status": "Delivered", "dispatchDate": "02 Oct 2026", "lrNumber": "LR-SR-9917"
+    }
+  ]
+}
