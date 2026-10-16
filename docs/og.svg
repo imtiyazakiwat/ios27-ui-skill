@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <title>ios27-ui — iOS 27 Liquid Glass UI skill for AI coding agents</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="0.55" stop-color="#14183a"/>
+      <stop offset="1" stop-color="#2a1140"/>
+    </linearGradient>
+    <radialGradient id="blob1" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#0a84ff" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#0a84ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blob2" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#bf5af2" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#bf5af2" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blob3" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#30d158" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#30d158" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.10"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.15"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <circle cx="1010" cy="170" r="300" fill="url(#blob1)"/>
+  <circle cx="1180" cy="520" r="260" fill="url(#blob2)"/>
+  <circle cx="820" cy="560" r="200" fill="url(#blob3)"/>
+
+  <!-- Phone -->
+  <g transform="translate(860 70)">
+    <rect width="300" height="560" rx="54" fill="#0d0f17" stroke="#3a3f55" stroke-width="3"/>
+    <rect x="12" y="12" width="276" height="536" rx="44" fill="#f2f2f7"/>
+    <rect x="112" y="24" width="76" height="22" rx="11" fill="#0d0f17"/>
+    <text x="32" y="104" font-family="SF Pro Display, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="30" font-weight="700" fill="#000">Library</text>
+    <!-- inset grouped list -->
+    <rect x="28" y="124" width="244" height="176" rx="14" fill="#fff"/>
+    <g font-family="SF Pro Text, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="15" fill="#000">
+      <circle cx="50" cy="153" r="11" fill="#0a84ff"/><text x="72" y="158">Inbox</text><text x="250" y="158" fill="#c7c7cc">›</text>
+      <line x1="72" y1="182" x2="272" y2="182" stroke="#e5e5ea"/>
+      <circle cx="50" cy="212" r="11" fill="#ff9f0a"/><text x="72" y="217">Due today</text><text x="250" y="217" fill="#c7c7cc">›</text>
+      <line x1="72" y1="241" x2="272" y2="241" stroke="#e5e5ea"/>
+      <circle cx="50" cy="271" r="11" fill="#30d158"/><text x="72" y="276">Completed</text><text x="250" y="276" fill="#c7c7cc">›</text>
+    </g>
+    <rect x="28" y="318" width="244" height="118" rx="14" fill="#fff"/>
+    <rect x="44" y="340" width="150" height="12" rx="6" fill="#d1d1d6"/>
+    <rect x="44" y="366" width="200" height="12" rx="6" fill="#e5e5ea"/>
+    <rect x="44" y="392" width="120" height="12" rx="6" fill="#e5e5ea"/>
+    <!-- glass tab bar -->
+    <rect x="34" y="470" width="232" height="58" rx="29" fill="#d9dbe6" fill-opacity="0.92" stroke="url(#rim)" stroke-width="1.5"/>
+    <rect x="42" y="477" width="72" height="44" rx="22" fill="#0a84ff" fill-opacity="0.16"/>
+    <circle cx="78" cy="499" r="9" fill="#0a84ff"/>
+    <circle cx="150" cy="499" r="9" fill="#8e8e93"/>
+    <circle cx="222" cy="499" r="9" fill="#8e8e93"/>
+    <!-- glass + button -->
+    <circle cx="246" cy="92" r="20" fill="#e3e4ec" stroke="url(#rim)" stroke-width="1.5"/>
+    <path d="M246 83v18M237 92h18" stroke="#0a84ff" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Copy -->
+  <g font-family="SF Pro Display, -apple-system, Helvetica Neue, Arial, sans-serif" fill="#fff">
+    <text x="80" y="150" font-size="26" font-weight="600" fill="#9fb4ff" letter-spacing="3">AGENT SKILL</text>
+    <text x="80" y="240" font-size="92" font-weight="800">ios27-ui</text>
+    <text x="80" y="306" font-size="38" font-weight="500" fill="#e6e8f2">iOS 27 Liquid Glass UI for</text>
+    <text x="80" y="354" font-size="38" font-weight="500" fill="#e6e8f2">AI coding agents</text>
+  </g>
+  <g>
+    <rect x="80" y="400" width="360" height="68" rx="34" fill="url(#glass)" stroke="url(#rim)" stroke-width="1.5"/>
+    <text x="112" y="445" font-family="SF Mono, Menlo, monospace" font-size="30" fill="#fff"><tspan fill="#30d158">$</tspan> npx ios27-ui</text>
+  </g>
+  <text x="80" y="540" font-family="SF Pro Text, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="24" fill="#b8bdd6">Claude Code · Cursor · Codex · Kiro · Copilot · Windsurf</text>
+  <text x="80" y="578" font-family="SF Pro Text, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="22" fill="#8a90ad">SwiftUI · React · Next.js · Apple HIG</text>
+</svg>

@@ -1,0 +1,13 @@
+{
+  "name": "ios27-ui",
+  "version": "0.2.0",
+  "description": "iOS 27 Liquid Glass UI skill: design, audit and build Apple HIG-quality screens (tab bars, navigation stacks, sheets, inset-grouped lists, spring motion) in SwiftUI, React and Next.js.",
+  "author": {
+    "name": "Imtiyaz Akiwat",
+    "url": "https://github.com/imtiyazakiwat"
+  },
+  "homepage": "https://imtiyazakiwat.github.io/ios27-ui-skill/",
+  "repository": "https://github.com/imtiyazakiwat/ios27-ui-skill",
+  "license": "MIT",
+  "keywords": ["ios", "ios27", "liquid-glass", "apple-hig", "swiftui", "react", "nextjs", "ui-design", "design-system"]
+}

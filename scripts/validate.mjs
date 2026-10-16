@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const SKILL = join(ROOT, 'skill', 'ios27-ui');
+const SKILL = join(ROOT, 'skills', 'ios27-ui');
 const errors = [];
 const err = msg => errors.push(msg);
 
@@ -48,6 +48,12 @@ for (const ref of readdirSync(join(SKILL, 'references'))) {
 
 // 5. Adapter template keeps its placeholder.
 if (!readFileSync(join(ROOT, 'adapters', 'rules.md'), 'utf8').includes('{{SKILL_DIR}}')) err('adapters/rules.md: missing {{SKILL_DIR}}');
+
+// 5b. Claude Code plugin manifest stays in sync with package.json.
+const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
+const plugin = JSON.parse(readFileSync(join(ROOT, '.claude-plugin', 'plugin.json'), 'utf8'));
+if (plugin.version !== pkg.version) err(`.claude-plugin/plugin.json version ${plugin.version} != package.json ${pkg.version}`);
+if (plugin.name !== 'ios27-ui') err('.claude-plugin/plugin.json: name must be "ios27-ui"');
 
 // 6. No junk files shipped.
 for (const f of files) if (/\.DS_Store$|Thumbs\.db$/.test(f)) err(`junk file: ${f.slice(ROOT.length + 1)}`);

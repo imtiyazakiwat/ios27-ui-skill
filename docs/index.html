@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ios27-ui — iOS 27 Liquid Glass UI skill for Claude Code, Cursor, Codex &amp; Kiro</title>
+  <meta name="description" content="Open-source agent skill that makes AI coding agents design, audit and build iOS 27 Liquid Glass screens following Apple's Human Interface Guidelines, in SwiftUI, React and Next.js. Install with npx ios27-ui.">
+  <meta name="keywords" content="iOS 27, Liquid Glass, Apple HIG, Human Interface Guidelines, agent skill, Claude Code skill, Cursor rules, Codex, Kiro, GitHub Copilot, SwiftUI, React, Next.js, iOS UI, design system">
+  <meta name="author" content="Imtiyaz Akiwat">
+  <link rel="canonical" href="https://imtiyazakiwat.github.io/ios27-ui-skill/">
+  <link rel="describedby" type="text/markdown" href="llms.txt">
+  <meta name="theme-color" content="#0b1020">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a84ff'/%3E%3Cpath d='M32 18v28M18 32h28' stroke='white' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ios27-ui">
+  <meta property="og:title" content="ios27-ui — iOS 27 Liquid Glass UI skill for AI coding agents">
+  <meta property="og:description" content="Make Claude Code, Cursor, Codex, Kiro and Copilot build screens that feel like Apple shipped them. One command: npx ios27-ui">
+  <meta property="og:url" content="https://imtiyazakiwat.github.io/ios27-ui-skill/">
+  <meta property="og:image" content="https://imtiyazakiwat.github.io/ios27-ui-skill/og.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="ios27-ui: iOS 27 Liquid Glass UI for AI coding agents. npx ios27-ui">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ios27-ui — iOS 27 Liquid Glass UI skill for AI coding agents">
+  <meta name="twitter:description" content="Make AI coding agents build screens that feel like Apple shipped them. npx ios27-ui">
+  <meta name="twitter:image" content="https://imtiyazakiwat.github.io/ios27-ui-skill/og.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareSourceCode",
+        "name": "ios27-ui",
+        "description": "Agent skill that makes AI coding agents design, audit and build iOS 27 Liquid Glass UIs following Apple's Human Interface Guidelines.",
+        "codeRepository": "https://github.com/imtiyazakiwat/ios27-ui-skill",
+        "programmingLanguage": ["JavaScript", "Swift", "CSS"],
+        "runtimePlatform": "Node.js",
+        "license": "https://opensource.org/licenses/MIT",
+        "author": { "@type": "Person", "name": "Imtiyaz Akiwat", "url": "https://github.com/imtiyazakiwat" },
+        "keywords": "iOS 27, Liquid Glass, Apple HIG, agent skill, Claude Code, Cursor, Codex, Kiro, SwiftUI, React, Next.js"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "What is ios27-ui?",
+            "acceptedAnswer": { "@type": "Answer", "text": "An open-source agent skill (a SKILL.md file plus references) that teaches AI coding agents Apple's iOS 27 design language: Liquid Glass on the navigation layer, Human Interface Guidelines components, spring motion and native gestures." } },
+          { "@type": "Question", "name": "Which AI coding tools does it support?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Claude Code, Kiro, Codex and other tools that read .agents/skills get the full skill. Cursor, Windsurf and GitHub Copilot get summary rules that point to it." } },
+          { "@type": "Question", "name": "Does it work for web apps or only SwiftUI?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Both. Web apps in React, Next.js or CSS follow the same patterns and behaviour as iOS. For native apps it tells the agent to use SwiftUI and UIKit system components instead of re-skinning them." } },
+          { "@type": "Question", "name": "Is this made by Apple?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. It's an independent open-source project based on Apple's public Human Interface Guidelines and WWDC sessions. Exact glass values aren't published by Apple, so they're approximations." } },
+          { "@type": "Question", "name": "How do I contribute?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Corrections backed by an Apple source are the most valuable. See CONTRIBUTING.md and the good first issues." } }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      /* Light values tuned for WCAG AA (>= 4.5:1 on #fff and #f2f2f7): secondary 5.7:1, tint 5.0:1 */
+      --bg: #f2f2f7; --card: #fff; --label: #000; --secondary: #5f5f66; --sep: #c6c6c8;
+      --tint: #0066cc; --green: #30d158; --radius: 14px;
+      color-scheme: light dark;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #000; --card: #1c1c1e; --label: #fff; --secondary: #ebebf599; --sep: #38383a; --tint: #0a84ff; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--label); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    main { max-width: 760px; margin: 0 auto; padding: max(48px, env(safe-area-inset-top)) 20px 64px; }
+    .eyebrow { color: var(--tint); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; margin: 0; }
+    h1 { font-size: clamp(40px, 8vw, 64px); line-height: 1.05; margin: 8px 0 12px; letter-spacing: -.02em; }
+    .lede { font-size: 20px; color: var(--secondary); margin: 0 0 28px; }
+    h2 { font-size: 13px; font-weight: 400; text-transform: uppercase; color: var(--secondary); margin: 36px 16px 8px; letter-spacing: .02em; }
+    .group { background: var(--card); border-radius: var(--radius); overflow: hidden; }
+    .row { padding: 12px 16px; position: relative; }
+    .row + .row::before { content: ""; position: absolute; top: 0; left: 16px; right: 0; border-top: .5px solid var(--sep); }
+    .row strong { display: block; font-weight: 600; }
+    .row span { color: var(--secondary); font-size: 15px; }
+    pre { margin: 0; padding: 14px 16px; overflow-x: auto; font: 15px/1.5 "SF Mono", Menlo, monospace; }
+    .cmd { display: flex; align-items: center; gap: 12px; }
+    .cmd pre { flex: 1; }
+    button { font: inherit; font-size: 15px; font-weight: 600; color: var(--tint); background: none; border: 0; padding: 12px 16px; min-height: 44px; cursor: pointer; }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--tint); outline-offset: 2px; border-radius: 8px; }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 8px; }
+    .cta a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 22px; font-weight: 600; text-decoration: none; }
+    .primary { background: var(--tint); color: #fff; }
+    .secondary { background: var(--card); color: var(--tint); }
+    a { color: var(--tint); }
+    img.hero { width: 100%; height: auto; border-radius: 20px; margin: 8px 0 0; display: block; }
+    details summary { cursor: pointer; font-weight: 600; min-height: 24px; }
+    details p { margin: 8px 0 0; color: var(--secondary); }
+    footer { margin-top: 48px; font-size: 13px; color: var(--secondary); text-align: center; }
+    @media (prefers-reduced-motion: no-preference) { .cta a { transition: transform .2s cubic-bezier(.2,.9,.3,1.2); } .cta a:active { transform: scale(.96); } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Open-source agent skill</p>
+  <h1>iOS 27 Liquid Glass UI for AI coding agents</h1>
+  <p class="lede">ios27-ui teaches Claude Code, Cursor, Codex, Kiro and Copilot to design, audit and build screens that feel like Apple shipped them, following the Human Interface Guidelines, in SwiftUI, React and Next.js.</p>
+
+  <div class="cta">
+    <a class="primary" href="https://github.com/imtiyazakiwat/ios27-ui-skill">Star on GitHub</a>
+    <a class="secondary" href="https://www.npmjs.com/package/ios27-ui">View on npm</a>
+  </div>
+
+  <img class="hero" src="og.png" width="1280" height="640" alt="ios27-ui social card: an iPhone screen with a large title, inset-grouped list and Liquid Glass tab bar, next to the command npx ios27-ui">
+
+  <h2>Install</h2>
+  <div class="group">
+    <div class="row cmd"><pre><code id="c1">npx ios27-ui</code></pre><button type="button" data-copy="c1" aria-label="Copy npx ios27-ui">Copy</button></div>
+    <div class="row cmd"><pre><code id="c2">npx skills add imtiyazakiwat/ios27-ui-skill</code></pre><button type="button" data-copy="c2" aria-label="Copy skills add command">Copy</button></div>
+    <div class="row cmd"><pre><code id="c3">/plugin marketplace add imtiyazakiwat/ios27-ui-skill</code></pre><button type="button" data-copy="c3" aria-label="Copy Claude Code plugin command">Copy</button></div>
+  </div>
+
+  <h2>What your agent will do</h2>
+  <div class="group">
+    <div class="row"><strong>Audit before redesigning</strong><span>Every element gets keep, move, merge or remove, with a reason. Duplicate actions and fake buttons go.</span></div>
+    <div class="row"><strong>Fix the information architecture</strong><span>Tabs only navigate. One primary action per screen. Detail is a push, edit is a sheet, delete needs confirmation or Undo.</span></div>
+    <div class="row"><strong>Build from tokens up</strong><span>tokens.css and spring presets, then kit components, then screens. Light and dark from the start.</span></div>
+    <div class="row"><strong>Native motion</strong><span>Push with parallax, edge-swipe back, receding sheets, large-title collapse, all interruptible and reduced-motion aware.</span></div>
+    <div class="row"><strong>Verify like a skeptic</strong><span>Screenshots in light and dark on an iPhone profile, real-data edge cases, and an honest report of what wasn't verified.</span></div>
+  </div>
+
+  <h2>Works with</h2>
+  <div class="group">
+    <div class="row"><strong>Claude Code, Kiro, Codex</strong><span>Full skill in .claude/skills, .kiro/skills, .agents/skills</span></div>
+    <div class="row"><strong>Cursor, Windsurf, GitHub Copilot</strong><span>Summary rules that point to the full skill</span></div>
+    <div class="row"><strong>SwiftUI, UIKit, React, Next.js, CSS</strong><span>Framework-neutral spec with web and native implementation guides</span></div>
+  </div>
+
+  <h2>FAQ</h2>
+  <div class="group">
+    <div class="row"><details><summary>What is ios27-ui?</summary><p>An open-source agent skill (a SKILL.md file plus references) that teaches AI coding agents Apple's iOS 27 design language: Liquid Glass on the navigation layer, Human Interface Guidelines components, spring motion and native gestures.</p></details></div>
+    <div class="row"><details><summary>Which AI coding tools does it support?</summary><p>Claude Code, Kiro, Codex and other tools that read .agents/skills get the full skill. Cursor, Windsurf and GitHub Copilot get summary rules that point to it.</p></details></div>
+    <div class="row"><details><summary>Does it work for web apps or only SwiftUI?</summary><p>Both. Web apps in React, Next.js or CSS follow the same patterns and behaviour as iOS. For native apps it tells the agent to use SwiftUI and UIKit system components instead of re-skinning them.</p></details></div>
+    <div class="row"><details><summary>Is this made by Apple?</summary><p>No. It's an independent open-source project based on Apple's public Human Interface Guidelines and WWDC sessions. Exact glass values aren't published by Apple, so they're approximations.</p></details></div>
+    <div class="row"><details><summary>How do I contribute?</summary><p>Corrections backed by an Apple source are the most valuable. See <a href="https://github.com/imtiyazakiwat/ios27-ui-skill/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> and the <a href="https://github.com/imtiyazakiwat/ios27-ui-skill/labels/good%20first%20issue">good first issues</a>.</p></details></div>
+  </div>
+
+  <footer>MIT licensed · Not affiliated with Apple. iOS and Liquid Glass are trademarks of Apple Inc. · <a href="https://github.com/imtiyazakiwat/ios27-ui-skill">GitHub</a></footer>
+</main>
+<script>
+  document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById(b.dataset.copy).textContent); b.textContent = 'Copied'; }
+    catch { b.textContent = 'Select & copy'; }
+    setTimeout(() => (b.textContent = 'Copy'), 1500);
+  }));
+</script>
+</body>
+</html>

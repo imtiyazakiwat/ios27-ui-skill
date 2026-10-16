@@ -50,7 +50,8 @@ New here? Pick a [good first issue](https://github.com/imtiyazakiwat/ios27-ui-sk
 ## Releases (maintainers)
 
 1. On a branch: move **Unreleased** entries in `CHANGELOG.md` under a new version heading and run
-   `npm version patch|minor|major --no-git-tag-version`. Open a PR and merge it.
+   `npm version patch|minor|major --no-git-tag-version`, then set the same `version` in `.claude-plugin/plugin.json`
+   (validation fails if they differ). Open a PR and merge it.
 2. Tag the merged commit on `main` and push the tag (only maintainers can create `v*` tags):
    ```bash
    git switch main && git pull
