@@ -1,0 +1,106 @@
+/* Quiet-surface kit: framework-neutral classes built on tokens.css ("Quiet surfaces").
+   Spec: references/visual-language.md. Sizes are real iOS points (393 pt wide iPhone), not showcase pixels.
+   Tailwind users: map these tokens in theme.extend instead of copying classes. */
+
+/* ---- Type --------------------------------------------------------------- */
+.q-large-title { font: 700 34px/41px var(--font); letter-spacing: var(--tracking-title); color: var(--ink-1); margin: 0; }
+.q-context     { font: 400 15px/20px var(--font); color: var(--ink-3); margin: 2px 0 0; }
+.q-headline    { font: 600 17px/22px var(--font); letter-spacing: var(--tracking-headline); color: var(--ink-1); }
+.q-body        { font: 400 15px/21px var(--font); letter-spacing: var(--tracking-body); color: var(--ink-2); }
+.q-meta        { font: 400 13px/18px var(--font); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.q-label       { display: flex; align-items: center; gap: 6px; font: 600 13px/18px var(--font); color: var(--ink-1); }
+.q-label svg   { width: 15px; height: 15px; stroke: var(--ink-icon); }
+.q-numeral     { font: 700 34px/1 var(--font-rounded); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.q-faded       { opacity: 0.35; }
+
+/* Editorial (user content only) */
+.q-serif-title { font: 600 26px/1.2 var(--font-serif); letter-spacing: -0.02em; color: var(--ink-1); }
+.q-serif-body  { font: 400 17px/1.6 var(--font-serif); color: var(--ink-1); }
+.q-quote       { font: italic 400 16px/1.6 var(--font-serif); color: var(--ink-2);
+                 padding-left: 12px; border-left: 2px solid color-mix(in srgb, var(--accent) 60%, transparent); }
+.q-mark        { background: color-mix(in srgb, #f6df7f 85%, transparent); border-radius: 2px; padding: 0 3px; }
+
+/* ---- Surfaces ----------------------------------------------------------- */
+.q-page  { background: var(--surface-0); color: var(--ink-1); min-height: 100dvh; font-family: var(--font); }
+.q-tile  { background: var(--surface-1); border: 0.5px solid var(--hairline); box-shadow: var(--shadow-whisper);
+           border-radius: var(--radius-tile); padding: 16px; display: flex; flex-direction: column; justify-content: space-between;
+           color: inherit; text-decoration: none; font: inherit; text-align: start; }
+/* Interactive tiles: use <a href> (tiles hold headings/paragraphs, which <button> may not contain). */
+a.q-tile, button.q-tile { cursor: pointer; }
+.q-bento { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.q-bento > .q-wide { grid-column: 1 / -1; }
+
+.q-group { background: var(--surface-1); border-radius: var(--radius-group); box-shadow: var(--shadow-whisper);
+           border: 0.5px solid var(--hairline); padding: 0 16px; }
+.q-row   { min-height: 48px; display: flex; align-items: center; gap: 12px; position: relative; }
+.q-row + .q-row::before { content: ""; position: absolute; top: 0; left: 30px; right: 0; border-top: 1px solid var(--hairline-row); }
+.q-row .q-trailing { margin-left: auto; display: flex; align-items: center; gap: 6px; color: var(--ink-3); font-size: 15px; }
+.q-row .q-chevron { stroke: var(--chevron); }
+.q-footnote { font: 400 13px/18px var(--font); color: var(--ink-3); margin: 8px 20px 0; }
+
+/* ---- Chrome (same material as content) ---------------------------------- */
+.q-pill   { background: var(--surface-1); border: 0.5px solid var(--hairline-chrome); box-shadow: var(--shadow-chrome);
+            height: 40px; padding: 0 6px; border-radius: 999px; display: inline-flex; align-items: center; gap: 2px; color: var(--ink-1); }
+.q-pill > button, .q-circle { min-width: 44px; min-height: 44px; display: inline-grid; place-items: center;
+            background: none; border: 0; color: inherit; border-radius: 999px; }
+.q-circle { width: 40px; height: 40px; min-width: 40px; background: var(--surface-1);
+            border: 0.5px solid var(--hairline-chrome); box-shadow: var(--shadow-chrome); }
+/* 40 pt visual, 44 pt hit area */
+.q-circle { position: relative; }
+.q-circle::after { content: ""; position: absolute; inset: -2px; }
+.q-primary { background: var(--accent); color: #fff; border: 0; box-shadow: var(--shadow-accent); }
+
+/* Floating bottom stack: composer above a capsule tab bar + separate search circle */
+.q-dock   { position: fixed; left: 16px; right: 16px; bottom: max(env(safe-area-inset-bottom), 12px);
+            display: grid; gap: 8px; z-index: 20; }
+/* Scroll-edge: content dissolves into the page colour before it reaches floating chrome. */
+.q-dock::before { content: ""; position: absolute; z-index: -1; pointer-events: none;
+            left: -16px; right: -16px; top: -40px; bottom: calc(-1 * max(env(safe-area-inset-bottom), 12px));
+            background: linear-gradient(to bottom, transparent, var(--surface-0) 45%); }
+.q-float  { background: color-mix(in srgb, var(--surface-1) 85%, transparent); backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%); border: 0.5px solid var(--hairline-chrome); box-shadow: var(--shadow-float); }
+.q-composer { height: 48px; border-radius: 999px; display: flex; align-items: center; gap: 10px; padding: 0 8px; color: var(--ink-placeholder); font-size: 15px; }
+.q-tabs   { display: flex; gap: 10px; }
+.q-tabbar { flex: 1; height: 58px; border-radius: 999px; padding: 4px; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; }
+.q-tab    { border-radius: 999px; display: grid; place-items: center; align-content: center; gap: 2px;
+            font: 500 11px/13px var(--font); color: var(--ink-1); background: none; border: 0; }
+.q-tab[aria-current="page"] { background: var(--tab-lens); color: var(--accent); font-weight: 600; }
+.q-search { width: 58px; height: 58px; border-radius: 999px; display: grid; place-items: center; }
+@media (prefers-reduced-transparency: reduce) {
+  .q-float { background: var(--surface-1); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+
+/* ---- Sheet over a tone-dimmed page -------------------------------------- */
+.q-page[data-dimmed="true"] { background: var(--surface-dimmed); }
+.q-page[data-dimmed="true"] .q-pill, .q-page[data-dimmed="true"] .q-circle { background: var(--chrome-dimmed); box-shadow: none; }
+.q-sheet  { background: var(--surface-sheet); border-radius: var(--radius-sheet) var(--radius-sheet) 0 0; box-shadow: var(--shadow-sheet); padding: 8px 16px; }
+.q-grabber { width: 36px; height: 5px; border-radius: 3px; background: var(--chevron); margin: 0 auto 8px; }
+.q-sheet-header { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; text-align: center;
+                  font: 600 17px/22px var(--font); letter-spacing: var(--tracking-headline); }
+
+/* ---- Quiet AI ----------------------------------------------------------- */
+.q-suggest { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-soft); color: var(--accent-on-soft);
+             border-radius: 999px; padding: 6px 12px; font: 500 13px/18px var(--font); }
+.q-suggest svg { fill: var(--accent); width: 14px; height: 14px; }
+.q-suggest button { position: relative; color: var(--accent); font: inherit; font-weight: 600; background: none; border: 0; padding: 0; }
+/* 44 pt hit area without growing the capsule (same technique as .q-circle) */
+.q-suggest button::after { content: ""; position: absolute; left: -8px; right: -8px; top: 50%; height: 44px; transform: translateY(-50%); }
+.q-cite   { color: var(--accent); font-weight: 700; font-size: 0.7em; vertical-align: super; }
+.q-chip   { display: inline-flex; align-items: center; gap: 6px; background: var(--fill-4); border-radius: 999px; padding: 4px 10px; font: 600 13px/18px var(--font); }
+
+/* ---- Themed paper: the background is the theme -------------------------- */
+.q-paper-dots { --surface-0: #f6f2e7; --ink-1: #18181b; --ink-2: #4a463f; --ink-3: #6b655a;
+  background-color: var(--surface-0); background-image: radial-gradient(#d5cebe 1px, transparent 1px); background-size: 16px 16px; }
+.q-paper-night { --surface-0: #0b0e17; --surface-1: #1c1f2b; --ink-1: #ffffff; --ink-2: #94a3b8; --ink-3: #94a3b8;
+  --hairline-chrome: rgba(255, 255, 255, 0.1); --shadow-chrome: none; color-scheme: dark;
+  background-color: var(--surface-0); color: var(--ink-1);
+  background-image: linear-gradient(to bottom, transparent 31px, rgba(255, 255, 255, 0.055) 32px); background-size: 100% 32px; }
+/* Chrome inside a paper inherits its --surface-1, so pills tint toward the page automatically. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .q-pill > button, .q-circle, .q-tab, a.q-tile { transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.25); }
+  .q-pill > button:active, .q-circle:active, .q-tab:active, a.q-tile:active { transform: scale(0.96); }
+}
+:where(.q-pill, .q-suggest) :focus-visible, .q-circle:focus-visible, .q-tab:focus-visible, a.q-tile:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}

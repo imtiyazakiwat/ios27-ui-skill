@@ -23,6 +23,15 @@ Numbers/prices: `ui-rounded, "SF Pro Rounded"` → falls back to Inter (**never*
 
 Inputs ≥ 16 px (avoids iOS zoom-on-focus). Tabular numerals for money.
 
+**Serif (`--font-serif`: `ui-serif, "New York", "Newsreader", Georgia, serif`)** — user content in reading contexts
+only (note titles and bodies, quotes). Title 26 / 1.2, 600, −0.02em; body 17 / 1.6, 400. Never in chrome.
+
+**Tracking on the web:** SF applies optical tracking automatically; for the Inter fallback use −0.03em titles,
+−0.015em headlines, −0.01em body, 0 captions (`--tracking-*`). Weights: 400 / 500 / 600 / 700, never 300.
+
+Quiet-surface tokens (`--surface-*`, `--ink-*`, `--hairline-*`, `--shadow-*`, `--radius-tile|group|sheet`) are
+specified in `references/visual-language.md`.
+
 ## Colors (iOS 26/27 system palette)
 
 Light / Dark:

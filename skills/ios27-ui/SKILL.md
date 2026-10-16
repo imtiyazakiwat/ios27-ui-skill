@@ -40,6 +40,11 @@ Hard rules — violating any of these is a defect:
    for switching *views of the same data*, max 4 segments.
 6. **Inset-grouped lists** for everything tabular; separators inset to the text; chevron = navigates.
 7. **No emoji as icons**; no brand header repeated on every screen; no uppercase-everything; no card inside card.
+   **Quiet surfaces:** separate by tone, weight and space, not lines or color. Cards are a 2 % hairline + whisper
+   shadow on a #F2F2F6 page; chrome (pills, circle buttons) uses the same material as content so it dissolves into
+   the theme; one accent color; three inks then opacity; one stroke-icon weight (`references/visual-language.md`).
+   **Fonts:** SF Pro (Inter fallback) for all UI; New York / Newsreader serif only for user content in reading
+   contexts; tabular numerals for counts and times. Never two sans families.
 8. **Large title on root screens, inline title + glass back chevron (no title text) on pushed screens.**
 9. **Springs, not eases.** Motion must be interruptible, respect `prefers-reduced-motion`, and never exceed ~0.6 s.
 10. **Design for real data**, not the seed: ALL-CAPS names, 10-digit phones, missing/broken photos, long strings,
@@ -76,6 +81,8 @@ screen only if it answers "what needs my attention today?". Write the IA down (R
 
 ### Phase 4 — Build bottom-up (`references/design-tokens.md`, `references/components.md`)
 1. **Tokens** (colors, type, spacing, radii, glass, springs) — copy `assets/tokens.css` and `assets/motion.ts`.
+   For the quiet, content-first look also copy `assets/quiet-kit.css` and match `examples/notes-showcase.html`
+   (proportions and restraint; build at real iOS sizes, the showcase phone is drawn at ≈ 0.835×).
 2. **Kit** (Screen/NavBar, BarButton, List/Row/Section, Controls, Menu, Sheet, ActionSheet, HUD, EmptyState).
 3. **Screens**, root → detail → sheets. Reuse kit; never restyle per screen.
 For web specifics (navigation stack, history sync, overlays) read `references/web-implementation.md`.
@@ -118,9 +125,11 @@ say "follows the same patterns and behaviour".
 | --- | --- |
 | `references/audit-and-convert.md` | Element decision table, necessity tests, anti-pattern fixes, IA rules |
 | `references/design-tokens.md` | Colors, type scale, metrics, radii, glass recipe, dark mode |
+| `references/visual-language.md` | Quiet-surface aesthetic, fonts, themed backgrounds, layout recipes, a11y guardrails |
 | `references/components.md` | Anatomy and rules for each iOS component |
 | `references/motion.md` | Spring tokens, transitions, gestures, thresholds |
 | `references/web-implementation.md` | React/Next architecture, code patterns, gotchas |
 | `references/native-swiftui.md` | SwiftUI/UIKit API mapping for iOS 26/27 |
 | `references/verification.md` | CI-as-compiler, screenshot harness, assertions, defect hunting |
-| `assets/` | `tokens.css`, `motion.ts`, CI templates |
+| `assets/` | `tokens.css`, `quiet-kit.css`, `motion.ts`, CI templates |
+| `examples/notes-showcase.html` | Visual target (10 screens, light/dark/themed). Read one `build*Screen` function at a time |

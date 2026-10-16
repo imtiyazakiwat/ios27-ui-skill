@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## Unreleased
 
+## 0.3.0
+
+- New `references/visual-language.md`: quiet-surface aesthetic (separation by tone not lines, chrome in the content material so it dissolves into the theme, one accent, three inks, themed paper backgrounds, tone-dimmed sheets), layout recipes, fonts and a11y guardrails.
+- Fonts: serif `--font-serif` (New York → Newsreader) for user content only, tracking tokens, weight rules.
+- `assets/tokens.css`: quiet-surface tokens (surfaces, ink, hairlines, shadows, radii) for light, dark and increased contrast; fixed a bug where an undefined `--font-inter` made the whole font stack fall back to the browser serif.
+- `assets/quiet-kit.css`: framework-neutral classes (tiles, bento, groups, pills, floating dock with scroll-edge fade, sheets, AI suggestions, paper themes).
+- `examples/notes-showcase.html` (visual target) and `examples/quiet-kit-demo.html` (real-size reproduction using only the kit).
+
 ## 0.2.0
 
 - Skill moved to `skills/ios27-ui/` (standard layout), so `npx skills add imtiyazakiwat/ios27-ui-skill` works and skills.sh can index it.

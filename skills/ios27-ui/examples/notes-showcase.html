@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iOS Notes Concept — Pixel-Perfect Interactive Showcase</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sf-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+      --sf-serif: "Newsreader", Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--sf-sans);
+      background-color: #EEEEF0;
+      color: #111111;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Realistic iPhone Frame */
+    .iphone-frame {
+      width: 346px;
+      height: 736px;
+      border-radius: 54px;
+      background: linear-gradient(145deg, #E7E7EA 0%, #DCDCE0 100%);
+      padding: 9px;
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.08),
+        0 20px 45px -12px rgba(0, 0, 0, 0.12),
+        0 4px 12px rgba(0, 0, 0, 0.05),
+        inset 0 1px 1px rgba(255, 255, 255, 0.8);
+      position: relative;
+      flex-shrink: 0;
+      user-select: none;
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .iphone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 45px;
+      overflow: hidden;
+      position: relative;
+      background: #F2F2F6;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Dotted Warm Paper Texture for Kyoto Note */
+    .kyoto-paper {
+      background-color: #F6F2E7;
+      background-image: radial-gradient(#D5CEBE 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+
+    .kyoto-paper-dimmed {
+      background-color: #DFDBD0;
+      background-image: radial-gradient(#C2BCAE 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+
+    /* Dark Lined Paper Texture for Late Thoughts */
+    .dark-lined-paper {
+      background-color: #0B0E17;
+      background-image: linear-gradient(to bottom, transparent 27px, rgba(255, 255, 255, 0.055) 28px);
+      background-size: 100% 28px;
+    }
+
+    /* Washi tape patterns */
+    .washi-blue-grid {
+      background-color: #DCE8F7;
+      background-image:
+        linear-gradient(to right, rgba(96, 146, 212, 0.32) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(96, 146, 212, 0.32) 1px, transparent 1px);
+      background-size: 6px 6px;
+    }
+
+    .washi-pink-dots {
+      background-color: #F5DCE0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.85) 1.3px, transparent 1.3px);
+      background-size: 6px 6px;
+    }
+
+    .washi-yellow-stripes {
+      background: repeating-linear-gradient(
+        -45deg,
+        #F7E9B7,
+        #F7E9B7 4px,
+        #FCF5DC 4px,
+        #FCF5DC 8px
+      );
+    }
+
+    /* iOS Keyboard Key Shadows */
+    .ios-key {
+      background: #FFFFFF;
+      border-radius: 5.5px;
+      box-shadow: 0 1px 0px rgba(0, 0, 0, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: 400;
+      color: #000;
+      height: 36px;
+      cursor: pointer;
+      transition: transform 0.05s ease, background-color 0.1s ease;
+    }
+    .ios-key:active {
+      background: #E5E5EA;
+      transform: translateY(1px);
+    }
+    .ios-key-fn {
+      background: #AEB3BE;
+      border-radius: 5.5px;
+      box-shadow: 0 1px 0px rgba(0, 0, 0, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px;
+      cursor: pointer;
+    }
+
+    /* Custom Scrollbars */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Subtle Glassmorphism */
+    .ios-glass-light {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .ios-glass-dark {
+      background: rgba(28, 28, 30, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    /* Black Touch Pointer Dot seen in Screenshots */
+    .touch-dot {
+      width: 11px;
+      height: 11px;
+      background: #111111;
+      border-radius: 9999px;
+      position: absolute;
+      pointer-events: none;
+      z-index: 40;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+
+    /* Blinking Caret */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .caret-blink {
+      animation: blink 1.1s infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-blue-500 selection:text-white">
+
+  <!-- TOP NAVIGATION / VIEW SWITCHER -->
+  <div class="fixed top-5 left-6 right-6 z-50 flex items-center justify-between pointer-events-none">
+    <!-- Exact "Close" pill from Screenshot 1 & 5 -->
+    <button onclick="switchView('all')" class="pointer-events-auto flex items-center gap-2 bg-white/95 hover:bg-white px-4 py-2 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-black/[0.04] transition active:scale-95">
+      <span class="w-2.5 h-2.5 rounded-full bg-[#1D63F0]"></span>
+      <span class="text-[13px] font-medium text-[#111]">Close</span>
+    </button>
+
+    <!-- Screenshot Preset Switcher Pill -->
+    <div class="pointer-events-auto flex items-center gap-1 bg-white/90 backdrop-blur-md p-1 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.07)] border border-black/[0.05] overflow-x-auto max-w-[80vw]">
+      <button onclick="switchView('all')" id="btn-all" class="view-btn px-3 py-1.5 rounded-full text-[12px] font-medium bg-[#111] text-white transition whitespace-nowrap">
+        All 10 Screens
+      </button>
+      <button onclick="switchView('shot1')" id="btn-shot1" class="view-btn px-3 py-1.5 rounded-full text-[12px] font-medium text-neutral-600 hover:text-black transition whitespace-nowrap">
+        Shot 1 · Brief + Note
+      </button>
+      <button onclick="switchView('shot2')" id="btn-shot2" class="view-btn px-3 py-1.5 rounded-full text-[12px] font-medium text-neutral-600 hover:text-black transition whitespace-nowrap">
+        Shot 2 · Home Light (01/06)
+      </button>
+      <button onclick="switchView('shot3')" id="btn-shot3" class="view-btn px-3 py-1.5 rounded-full text-[12px] font-medium text-neutral-600 hover:text-black transition whitespace-nowrap">
+        Shot 3 · New Note (03/06)
+      </button>
+      <button onclick="switchView('shot4')" id="btn-shot4" class="view-btn px-3 py-1.5 rounded-full text-[12px] font-medium text-neutral-600 hover:text-black transition whitespace-nowrap">
+        Shot 4 · Home Dark (04/06)
+      </button>
+      <button onclick="switchView('shot5')" id="btn-shot5" class="view-btn px-3 py-1.5 rounded-full text-[12px] font-medium text-neutral-600 hover:text-black transition whitespace-nowrap">
+        Shot 5 · Tools & Templates
+      </button>
+      <button onclick="switchView('shot6')" id="btn-shot6" class="view-btn px-3 py-1.5 rounded-full text-[12px] font-medium text-neutral-600 hover:text-black transition whitespace-nowrap">
+        Shot 6 · Scan, AI & Dark
+      </button>
+    </div>
+  </div>
+
+  <!-- Left decorative mini stack icon from Screenshot 1 & 5 -->
+  <div id="left-stack-icon" class="fixed left-3 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-center pointer-events-none">
+    <svg width="24" height="32" viewBox="0 0 24 32" fill="none">
+      <rect x="4" y="12" width="14" height="16" rx="3" transform="rotate(-8 4 12)" fill="#2563EB"/>
+      <rect x="5" y="8" width="14" height="16" rx="3" transform="rotate(4 5 8)" fill="#FDE047" stroke="#EAB308" stroke-width="0.6"/>
+      <rect x="4" y="4" width="14" height="16" rx="3" fill="#FFFFFF" stroke="#D4D4D8" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <!-- MAIN CONTENT STAGE -->
+  <main id="stage-container" class="flex-1 flex items-center pt-20 pb-24 px-6 md:px-12 overflow-x-auto no-scrollbar">
+    <!-- Screens & editorial layouts are dynamically arranged here based on active mode -->
+    <div id="screens-wrapper" class="flex items-start gap-9 mx-auto"></div>
+  </main>
+
+  <!-- Bottom Left Slide Counter (for Shot 2, 3, 4) -->
+  <div id="slide-counter" class="fixed bottom-7 left-7 z-40 hidden text-[15px] font-medium tracking-tight">
+    <span id="slide-num" class="text-[#111]">01</span>
+    <span class="text-neutral-400"> / 06</span>
+  </div>
+
+  <!-- Bottom Center Floating "What's on your mind?" Bar (Present across all screenshots) -->
+  <div id="global-bottom-bar" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-[430px] max-w-[90vw]">
+    <div onclick="triggerQuickNoteDemo()" class="cursor-pointer bg-white/95 hover:bg-white rounded-full px-3 py-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.04)] border border-black/[0.04] flex items-center gap-3.5 transition-all hover:scale-[1.01] active:scale-[0.99]">
+      <div class="w-9 h-9 rounded-full bg-[#1B64F2] flex items-center justify-center text-white shadow-sm flex-shrink-0">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+      </div>
+      <span class="text-[16px] text-[#8E8E93] font-normal tracking-[-0.01em]">What’s on your mind?</span>
+    </div>
+  </div>
+
+  <script>
+    // Common Status Bar HTML Generator (Light & Dark variants)
+    function renderStatusBar(theme = 'light', showIsland = true) {
+      const textColor = theme === 'dark' ? 'text-white' : 'text-[#111111]';
+      const iconFill = theme === 'dark' ? '#FFFFFF' : '#111111';
+      return `
+        <div class="w-full h-[46px] px-6 pt-2 flex items-center justify-between relative z-30 select-none ${textColor}">
+          <span class="text-[13.5px] font-semibold tracking-[-0.02em] w-12">9:41</span>
+          ${showIsland ? `<div class="w-[94px] h-[26px] bg-black rounded-full"></div>` : `<div class="w-[94px] h-[26px]"></div>`}
+          <div class="flex items-center gap-1.5 w-14 justify-end">
+            <!-- Cellular Signal -->
+            <svg width="15" height="10" viewBox="0 0 17 11" fill="none">
+              <rect x="0.5" y="7" width="2.6" height="3.5" rx="0.8" fill="${iconFill}"/>
+              <rect x="4.5" y="5" width="2.6" height="5.5" rx="0.8" fill="${iconFill}"/>
+              <rect x="8.5" y="2.8" width="2.6" height="7.7" rx="0.8" fill="${iconFill}"/>
+              <rect x="12.5" y="0.5" width="2.6" height="10" rx="0.8" fill="${iconFill}"/>
+            </svg>
+            <!-- Wi-Fi -->
+            <svg width="14" height="10" viewBox="0 0 16 11" fill="none">
+              <path d="M8 10.6C8.8 10.6 9.45 9.95 9.45 9.15C9.45 8.35 8.8 7.7 8 7.7C7.2 7.7 6.55 8.35 6.55 9.15C6.55 9.95 7.2 10.6 8 10.6Z" fill="${iconFill}"/>
+              <path d="M4.4 6.7C5.4 5.7 6.65 5.15 8 5.15C9.35 5.15 10.6 5.7 11.6 6.7" stroke="${iconFill}" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M1.6 3.9C3.3 2.15 5.55 1.2 8 1.2C10.45 1.2 12.7 2.15 14.4 3.9" stroke="${iconFill}" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <!-- Battery -->
+            <svg width="22" height="11" viewBox="0 0 25 12" fill="none">
+              <rect x="0.75" y="1" width="20" height="10" rx="3" stroke="${iconFill}" stroke-opacity="0.35" stroke-width="1"/>
+              <rect x="2" y="2.2" width="17.5" height="7.6" rx="1.8" fill="${iconFill}"/>
+              <path d="M22.2 4.2V7.8C23.1 7.45 23.6 6.75 23.6 6C23.6 5.25 23.1 4.55 22.2 4.2Z" fill="${iconFill}" fill-opacity="0.4"/>
+            </svg>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderHomeIndicator(dark = false) {
+      return `
+        <div class="absolute bottom-[6px] left-1/2 -translate-x-1/2 w-[116px] h-[4px] rounded-full ${dark ? 'bg-white/90' : 'bg-[#111]/90'} z-40"></div>
+      `;
+    }
+
+    // 1. HOME SCREEN (Supports Light & Dark mode)
+    function buildHomeScreen(mode = 'light') {
+      const isDark = mode === 'dark';
+      const bgMain = isDark ? 'bg-[#000000] text-white' : 'bg-[#F2F2F6] text-[#111111]';
+      const cardBg = isDark ? 'bg-[#161618] border border-white/[0.06]' : 'bg-white border border-black/[0.02] shadow-[0_1px_4px_rgba(0,0,0,0.02)]';
+      const pillControlBg = isDark ? 'bg-[#18181B] border border-white/[0.12] text-white' : 'bg-white shadow-[0_2px_8px_rgba(0,0,0,0.05)] border border-black/[0.04] text-[#111]';
+      const subText = isDark ? 'text-[#8E8E93]' : 'text-[#7C7C82]';
+      const bodyText = isDark ? 'text-[#98989F]' : 'text-[#68686E]';
+      const floatInputBg = isDark
+        ? 'bg-[#1C1C1E]/85 border border-white/[0.14] text-[#8E8E93] shadow-[0_8px_24px_rgba(0,0,0,0.5)]'
+        : 'bg-white/85 border border-black/[0.06] text-[#7C7C82] shadow-[0_6px_20px_rgba(0,0,0,0.06)]';
+      const navPillBg = isDark
+        ? 'bg-[#161618]/90 border border-white/[0.12]'
+        : 'bg-white/90 border border-black/[0.05] shadow-[0_4px_16px_rgba(0,0,0,0.05)]';
+      const activeTabBg = isDark ? 'bg-[#252528]' : 'bg-[#E5E6EB]';
+
+      return `
+        <div class="iphone-frame">
+          <div class="iphone-screen ${bgMain} flex flex-col justify-between">
+            ${renderStatusBar(isDark ? 'dark' : 'light', !isDark)}
+
+            <!-- Top Right Notification & Profile Row -->
+            <div class="px-5 pt-0.5 flex justify-end items-center gap-2">
+              <div class="${pillControlBg} h-[34px] px-3 rounded-full flex items-center gap-3.5">
+                <!-- Bell with blue dot -->
+                <div class="relative">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                  </svg>
+                  <span class="w-[6.5px] h-[6.5px] rounded-full bg-[#1B64F2] absolute -top-0.5 -right-0.5"></span>
+                </div>
+                <!-- 2x2 Grid Icon -->
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                  <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                  <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                </svg>
+              </div>
+              <div class="${pillControlBg} w-[34px] h-[34px] rounded-full flex items-center justify-center text-[13px] font-semibold">
+                S
+              </div>
+            </div>
+
+            <!-- Main Scrollable Content -->
+            <div class="px-4 pt-1 flex-1 flex flex-col gap-2.5 overflow-hidden">
+              <!-- Title & Date -->
+              <div class="px-1">
+                <h1 class="text-[28px] font-bold tracking-[-0.03em] leading-[1.1]">Home</h1>
+                <p class="text-[12px] ${subText} mt-0.5 font-normal">Good morning · Monday, 28 September</p>
+              </div>
+
+              <!-- Continue Writing Card -->
+              <div class="${cardBg} rounded-[22px] p-4 flex flex-col justify-between h-[138px]">
+                <div>
+                  <div class="flex items-center gap-1.5 text-[11.5px] font-semibold mb-1.5">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="${isDark ? '#A1A1AA' : '#6B7280'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    <span>Continue writing</span>
+                  </div>
+                  <h2 class="text-[15.5px] font-semibold tracking-[-0.015em] mb-1">Q4 roadmap</h2>
+                  <p class="text-[12px] ${bodyText} leading-[1.38] line-clamp-2">
+                    Offline sync first, then search v2. Ship the new editor before Diwali — Aarav owns search, I own th...
+                  </p>
+                </div>
+                <div class="text-[10.5px] ${subText}">Edited today at 10:24</div>
+              </div>
+
+              <!-- 2x2 Bento Grid -->
+              <div class="grid grid-cols-2 gap-2.5">
+                <!-- To-dos Card -->
+                <div class="${cardBg} rounded-[22px] p-3.5 h-[138px] flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center gap-1.5 text-[11.5px] font-semibold">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="${isDark ? '#A1A1AA' : '#6B7280'}" stroke-width="2" stroke-linecap="round">
+                        <circle cx="5" cy="7" r="2"/>
+                        <path d="M10 7h10"/>
+                        <circle cx="5" cy="17" r="2"/>
+                        <path d="M10 17h10"/>
+                      </svg>
+                      <span>To-dos</span>
+                    </div>
+                    <div class="mt-2 flex items-baseline gap-1.5">
+                      <span class="text-[28px] font-bold tracking-tight leading-none">3</span>
+                      <span class="text-[11.5px] ${subText}">left today</span>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <span class="w-[15px] h-[15px] rounded-full border-[1.5px] ${isDark ? 'border-neutral-500' : 'border-neutral-400'} flex-shrink-0 mt-0.5"></span>
+                    <span class="text-[11.5px] leading-[1.25] ${isDark ? 'text-neutral-200' : 'text-neutral-800'}">Send Rhea the revised design</span>
+                  </div>
+                </div>
+
+                <!-- Favourites Card -->
+                <div class="${cardBg} rounded-[22px] p-3.5 h-[138px] flex flex-col justify-between">
+                  <div class="flex items-center gap-1.5 text-[11.5px] font-semibold">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="${isDark ? '#A1A1AA' : '#6B7280'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <span>Favourites</span>
+                  </div>
+                  <div>
+                    <div class="text-[15px] font-bold tracking-[-0.01em] mb-0.5">Rates & terms</div>
+                    <div class="text-[11px] ${subText}">and 4 more favourites</div>
+                  </div>
+                </div>
+
+                <!-- Folders Card -->
+                <div class="${cardBg} rounded-[22px] p-3.5 h-[134px] flex flex-col justify-between">
+                  <div class="flex items-center gap-1.5 text-[11.5px] font-semibold">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="${isDark ? '#A1A1AA' : '#6B7280'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <span>Folders</span>
+                  </div>
+                  <div class="space-y-2 text-[12px]">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="${isDark ? '#8E8E93' : '#7C7C82'}" stroke-width="1.8"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                        <span>Work</span>
+                      </div>
+                      <span class="${subText} text-[11px]">24</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="${isDark ? '#8E8E93' : '#7C7C82'}" stroke-width="1.8"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                        <span>Personal</span>
+                      </div>
+                      <span class="${subText} text-[11px]">12</span>
+                    </div>
+                    <div class="flex items-center justify-between opacity-30 pt-0.5">
+                      <div class="flex items-center gap-2">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                        <span>Travel</span>
+                      </div>
+                      <span class="text-[11px]">8</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- From your past Card -->
+                <div class="${cardBg} rounded-[22px] p-3.5 h-[134px] flex flex-col justify-between">
+                  <div class="flex items-center gap-1.5 text-[11.5px] font-semibold">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="${isDark ? '#A1A1AA' : '#6B7280'}" stroke-width="2" stroke-linecap="round">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 7v5l3 2"/>
+                    </svg>
+                    <span>From your past</span>
+                  </div>
+                  ${isDark ? `<div class="w-3.5 h-3.5 rounded-full border-[1.6px] border-neutral-300 my-0.5"></div>` : ''}
+                  <div>
+                    <div class="text-[13px] font-semibold mb-0.5">Studio plans</div>
+                    <p class="text-[11px] ${bodyText} leading-[1.3] line-clamp-2">I want to build my own design studio — small</p>
+                    <p class="text-[10px] ${subText} opacity-40 mt-1">Written on 14 Aug</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating "What's on your mind?" + Bottom Tab Bar Overlay -->
+            <div class="px-4 pb-5 pt-1 relative z-20 flex flex-col gap-2">
+              <!-- Floating Input Pill -->
+              <div class="${floatInputBg} backdrop-blur-md rounded-full h-[40px] px-2.5 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-[24px] h-[24px] rounded-full bg-[#1B64F2] flex items-center justify-center text-white">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </div>
+                  <span class="text-[12.5px]">What’s on your mind?</span>
+                </div>
+                <div class="flex items-center gap-3 pr-1.5 ${isDark ? 'text-white' : 'text-[#111]'}">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <rect x="9" y="2" width="6" height="11" rx="3"/>
+                    <path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/>
+                  </svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Bottom Navigation Row -->
+              <div class="flex items-center gap-2.5">
+                <div class="${navPillBg} backdrop-blur-md rounded-full h-[48px] p-1 flex-1 grid grid-cols-3 items-center">
+                  <!-- Home Tab -->
+                  <div class="${activeTabBg} h-full rounded-full flex flex-col items-center justify-center">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="#1B64F2">
+                      <path d="M12 3L3 10.5h2.5V20h5v-5.5h3V20h5v-9.5H21L12 3z"/>
+                    </svg>
+                    <span class="text-[9.5px] font-semibold text-[#1B64F2] mt-0.5">Home</span>
+                  </div>
+                  <!-- Notes Tab -->
+                  <div class="flex flex-col items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="${isDark ? '#FFFFFF' : '#111111'}">
+                      <rect x="4" y="2" width="16" height="20" rx="3"/>
+                      <path d="M8 7h8M8 11h8M8 15h5" stroke="${isDark ? '#161618' : '#FFFFFF'}" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                    <span class="text-[9.5px] font-medium mt-0.5">Notes</span>
+                  </div>
+                  <!-- Spaces Tab -->
+                  <div class="flex flex-col items-center justify-center">
+                    <svg width="16" height="15" viewBox="0 0 24 24" fill="${isDark ? '#FFFFFF' : '#111111'}">
+                      <circle cx="9" cy="8" r="3.2"/>
+                      <circle cx="16" cy="9" r="2.6"/>
+                      <path d="M3 19c0-3 2.8-5 6-5s6 2 6 5"/>
+                      <path d="M14.5 19c.2-2.2 2.1-3.8 4.5-3.8 2.2 0 4 1.4 4 3.8"/>
+                    </svg>
+                    <span class="text-[9.5px] font-medium mt-0.5">Spaces</span>
+                  </div>
+                </div>
+
+                <!-- Search Circle Button -->
+                <div class="${navPillBg} backdrop-blur-md w-[48px] h-[48px] rounded-full flex items-center justify-center">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                    <circle cx="11" cy="11" r="7"/>
+                    <path d="M20 20l-3.8-3.8"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            ${renderHomeIndicator(isDark)}
+          </div>
+        </div>
+      `;
+    }
+
+    // 3. NEW NOTE SCREEN (Typed note with suggested to-do, suggested folder, and full iOS keyboard)
+    function buildNewNoteScreen(dotPosition = 'text') {
+      const row1 = ['q','w','e','r','t','y','u','i','o','p'];
+      const row2 = ['a','s','d','f','g','h','j','k','l'];
+      const row3 = ['z','x','c','v','b','n','m'];
+
+      return `
+        <div class="iphone-frame">
+          <div class="iphone-screen bg-[#DFDFE4] flex flex-col justify-between relative">
+            ${renderStatusBar('light', true)}
+
+            <!-- Dimmed Background Home Header -->
+            <div class="px-5 pt-0.5">
+              <div class="flex justify-end items-center gap-2">
+                <div class="bg-[#ECECEF] h-[33px] px-3 rounded-full flex items-center gap-3.5 border border-black/[0.04]">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.9"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+                </div>
+                <div class="bg-[#ECECEF] w-[33px] h-[33px] rounded-full flex items-center justify-center text-[13px] font-semibold">S</div>
+              </div>
+              <div class="mt-1">
+                <h1 class="text-[28px] font-bold tracking-[-0.03em] leading-[1.1] text-[#111]">Home</h1>
+                <p class="text-[12px] text-[#6C6C72] mt-0.5">Good morning · Monday, 28 September</p>
+              </div>
+            </div>
+
+            <!-- White Bottom Sheet: New Note -->
+            <div class="bg-[#F9F9FB] rounded-t-[28px] flex-1 mt-1.5 flex flex-col justify-between shadow-[0_-4px_25px_rgba(0,0,0,0.08)] relative overflow-hidden">
+              <!-- Top Sheet Content -->
+              <div class="px-4 pt-2">
+                <div class="w-8 h-1 bg-[#D8D8DC] rounded-full mx-auto mb-2"></div>
+                <!-- Sheet Header -->
+                <div class="flex items-center justify-between mb-3.5">
+                  <button class="w-[32px] h-[32px] rounded-full bg-white shadow-[0_1px_4px_rgba(0,0,0,0.08)] flex items-center justify-center text-[#111]">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  </button>
+                  <span class="text-[13.5px] font-semibold text-[#111]">New note</span>
+                  <button class="w-[32px] h-[32px] rounded-full bg-[#0A84FF] shadow-[0_2px_6px_rgba(10,132,255,0.35)] flex items-center justify-center text-white">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </button>
+                </div>
+
+                <!-- Note Content -->
+                <div class="px-0.5 relative">
+                  <h2 class="text-[15.5px] font-bold text-[#111] tracking-[-0.015em] mb-1.5">Call the ryokan about late check-in</h2>
+                  <p class="text-[12.8px] text-[#222] leading-[1.45] relative">
+                    Ask if they can hold the room past 10 pm — our train gets into Kyoto at 9:40. Booking ref<br/>
+                    KY-2231. <span class="inline-block w-[1.8px] h-[15px] bg-[#0A84FF] align-middle caret-blink"></span>
+                  </p>
+                  ${dotPosition === 'text' ? `<div class="touch-dot" style="top: 32px; left: 194px;"></div>` : ''}
+
+                  <!-- Suggested To-Do Pill -->
+                  <div class="mt-3.5 inline-flex items-center gap-1.5 bg-[#E6F2FF] px-3 py-1.5 rounded-full text-[11px]">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#0A84FF">
+                      <path d="M10 3L12 8L17 10L12 12L10 17L8 12L3 10L8 8L10 3Z"/>
+                      <path d="M18 14L19 16.5L21.5 17.5L19 18.5L18 21L17 18.5L14.5 17.5L17 16.5L18 14Z"/>
+                    </svg>
+                    <span class="text-[#1D3557] font-medium">Looks like a to-do · Add to To-dos</span>
+                    <span class="text-[#0A84FF] font-semibold ml-0.5 cursor-pointer">Add</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lower Toolbar + Keyboard Area -->
+              <div>
+                <!-- Suggested Folder Row -->
+                <div class="px-4 mb-2 flex items-center gap-2">
+                  <div class="inline-flex items-center gap-1 bg-[#E6F2FF] px-2.5 py-1 rounded-full text-[11px] font-semibold text-[#111]">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#0A84FF">
+                      <path d="M10 3L12 8L17 10L12 12L10 17L8 12L3 10L8 8L10 3Z"/>
+                    </svg>
+                    <span>Travel</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                  <span class="text-[10.8px] text-[#8E8E93]">Suggested from “ryokan”, “Kyoto”</span>
+                </div>
+
+                <!-- Formatting Pill Bar -->
+                <div class="mx-3 mb-2 bg-white rounded-full h-[36px] px-4 shadow-[0_1px_5px_rgba(0,0,0,0.06)] border border-black/[0.04] flex items-center justify-between text-[#111] relative">
+                  <span class="text-[13px] font-semibold">Aa</span>
+                  <!-- Checklist -->
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="7" r="2"/><path d="M10 7h10"/><circle cx="5" cy="17" r="2"/><path d="M10 17h10"/></svg>
+                  <!-- Bullet list -->
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                  <!-- Image icon -->
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5" fill="currentColor"/><path d="M21 15l-5-5L5 20"/></svg>
+                  <!-- Palette -->
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2a10 10 0 0 0 0 20c1.7 0 3-1.3 3-3 0-.8-.3-1.5-.8-2-.5-.5-.8-1.2-.8-2 0-1.7 1.3-3 3-3h1.6c2.2 0 4-1.8 4-4 0-3.3-4.5-6-10-6z"/><circle cx="7.5" cy="10.5" r="1" fill="currentColor"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/><circle cx="16.5" cy="10.5" r="1" fill="currentColor"/></svg>
+                  <!-- Blue Sparkle -->
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#0A84FF"><path d="M11 3L13 8.5L18.5 10.5L13 12.5L11 18L9 12.5L3.5 10.5L9 8.5L11 3Z"/><circle cx="18" cy="18" r="1.5"/></svg>
+                  <!-- Keyboard down -->
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 13h8"/></svg>
+                  ${dotPosition === 'keyboard' ? `<div class="touch-dot" style="bottom: -8px; left: 214px;"></div>` : ''}
+                </div>
+
+                <!-- iOS Keyboard Container -->
+                <div class="bg-[#D5D8DF] rounded-t-[20px] pt-2 pb-5 px-1.5 select-none">
+                  <!-- Predictive Bar -->
+                  <div class="grid grid-cols-3 text-center text-[12.5px] text-[#111] pb-2 px-2">
+                    <div class="border-r border-black/10">“Design”</div>
+                    <div class="border-r border-black/10">Designs</div>
+                    <div>Designed</div>
+                  </div>
+
+                  <!-- Keys Row 1 -->
+                  <div class="grid grid-cols-10 gap-[4.5px] mb-[8px] px-0.5">
+                    ${row1.map(k => `<div class="ios-key">${k}</div>`).join('')}
+                  </div>
+
+                  <!-- Keys Row 2 -->
+                  <div class="grid grid-cols-9 gap-[4.5px] mb-[8px] px-4">
+                    ${row2.map(k => `<div class="ios-key">${k}</div>`).join('')}
+                  </div>
+
+                  <!-- Keys Row 3 -->
+                  <div class="flex items-center gap-[4.5px] mb-[8px] px-0.5">
+                    <div class="ios-key-fn w-[36px] bg-white">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linejoin="round"><path d="M12 4L4 13h5v7h6v-7h5L12 4z"/></svg>
+                    </div>
+                    <div class="flex-1 grid grid-cols-7 gap-[4.5px]">
+                      ${row3.map(k => `<div class="ios-key">${k}</div>`).join('')}
+                    </div>
+                    <div class="ios-key-fn w-[36px] bg-white">
+                      <svg width="16" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.9"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><path d="M18 9l-6 6M12 9l6 6"/></svg>
+                    </div>
+                  </div>
+
+                  <!-- Keys Row 4 (123, space, return) -->
+                  <div class="flex items-center gap-[5px] px-0.5">
+                    <div class="ios-key w-[70px] text-[13px] font-medium">123</div>
+                    <div class="ios-key flex-1"></div>
+                    <div class="ios-key w-[70px]">
+                      <svg width="16" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 10l-5 5 5 5"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/></svg>
+                    </div>
+                  </div>
+
+                  <!-- Bottom Emoji & Mic Row -->
+                  <div class="flex items-center justify-between px-4 pt-3 pb-1 text-[#2C2C2E]">
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.5 2.5 2 3.5 2s2.5-.5 3.5-2"/><circle cx="9" cy="9.5" r="1" fill="currentColor"/><circle cx="15" cy="9.5" r="1" fill="currentColor"/></svg>
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            ${renderHomeIndicator(false)}
+          </div>
+        </div>
+      `;
+    }
+
+    // 4. KYOTO DAY THREE — PEN PALETTE SCREEN
+    function buildKyotoPenScreen() {
+      return `
+        <div class="iphone-frame">
+          <div class="iphone-screen kyoto-paper flex flex-col justify-between relative">
+            ${renderStatusBar('light', true)}
+
+            <!-- Top Action Bar -->
+            <div class="px-4 pt-0.5 flex items-center justify-between relative z-20">
+              <button class="w-[32px] h-[32px] rounded-full bg-white/90 shadow-sm flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <div class="flex items-center gap-2">
+                <div class="bg-white/90 h-[32px] px-3.5 rounded-full shadow-sm flex items-center gap-3.5 text-[#111]">
+                  <!-- Undo -->
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+                  <!-- Redo (faded) -->
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B0B0B5" stroke-width="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></svg>
+                  <!-- Palette -->
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="10.5" r="1" fill="currentColor"/><circle cx="12" cy="8" r="1" fill="currentColor"/><circle cx="15.5" cy="10.5" r="1" fill="currentColor"/></svg>
+                  <!-- More -->
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg>
+                </div>
+                <button class="w-[32px] h-[32px] rounded-full bg-[#0A84FF] text-white flex items-center justify-center shadow-sm">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Journal Page Body -->
+            <div class="px-5 pt-2 flex-1 relative">
+              <!-- Washi Tape + Polaroid Sticker Top Right -->
+              <div class="absolute right-4 -top-1 z-10 pointer-events-none">
+                <div class="w-[62px] h-[18px] washi-blue-grid opacity-85 -rotate-6 translate-y-2 -translate-x-2 rounded-[2px]"></div>
+                <div class="w-[46px] h-[54px] bg-white border-[1.5px] border-[#222] rounded-[4px] p-1 rotate-6 shadow-sm ml-3">
+                  <div class="w-full h-[33px] bg-[#D6E6F5] border border-[#222]/40 rounded-[1px]"></div>
+                </div>
+              </div>
+
+              <h1 style="font-family: var(--sf-serif);" class="text-[24px] font-semibold text-[#18181B] tracking-[-0.02em] mb-2">Kyoto, day three</h1>
+
+              <p class="text-[11.2px] text-[#32302C] leading-[1.52] pr-6">
+                Up early for Fushimi Inari before the crowds. The gates go on <span class="bg-[#F6DF7F] px-1 rounded-[2px]">far longer</span><br/>
+                <span class="bg-[#F6DF7F] px-1 rounded-[2px]">than the photos suggest</span>, and the light through them turns everything orange.
+              </p>
+
+              <!-- Still to do + Coffee Sticker -->
+              <div class="mt-3.5 relative flex items-center justify-between">
+                <div>
+                  <h2 class="text-[13px] font-bold text-[#18181B]">Still to do</h2>
+                  <!-- Hand-drawn red/brown underline -->
+                  <svg width="68" height="6" viewBox="0 0 68 6" fill="none" class="mt-0.5">
+                    <path d="M1 4.2C20 1.5 45 5.2 67 2.2" stroke="#C84B31" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <!-- Steaming Coffee Sticker -->
+                <div class="mr-1 -mt-2 bg-white/80 p-1 rounded-lg">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <path d="M11 8C11 6.5 12.5 5.5 12.5 4M16 8C16 6.5 17.5 5.5 17.5 4" stroke="#78350F" stroke-width="1.7" stroke-linecap="round"/>
+                    <path d="M7 12H21V19C21 22.866 17.866 26 14 26C10.134 26 7 22.866 7 19V12Z" fill="#FEF3C7" stroke="#222" stroke-width="1.8"/>
+                    <path d="M21 14H23.5C25.1569 14 26.5 15.3431 26.5 17C26.5 18.6569 25.1569 20 23.5 20H21" stroke="#222" stroke-width="1.8"/>
+                    <path d="M9 15H19V18C19 20.7614 16.7614 23 14 23C11.2386 23 9 20.7614 9 18V15Z" fill="#92400E"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Checklist Items -->
+              <div class="mt-2 space-y-2 text-[11.3px]">
+                <div class="flex items-center gap-2 text-[#8C857B]">
+                  <span class="w-[14px] h-[14px] rounded-full bg-[#A17C38] text-white flex items-center justify-center flex-shrink-0">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="line-through">Matcha at Ippodo</span>
+                </div>
+
+                <div class="flex items-center gap-2 text-[#1F1E1B] relative">
+                  <span class="w-[14px] h-[14px] rounded-full border-[1.4px] border-[#8C857B] flex-shrink-0"></span>
+                  <span class="relative px-1">
+                    Nishiki market for lunch
+                    <!-- Hand-drawn ink oval around "Nishiki market for lunch" -->
+                    <svg class="absolute -left-1.5 -top-1 w-[144px] h-[22px] pointer-events-none" viewBox="0 0 150 24" fill="none">
+                      <path d="M8 4.5C35 0.5 125 0.8 143 8.5C152 13 138 21.5 85 22C30 22.5 2 18.5 3 10.5C3.8 5 18 3.2 28 3.5" stroke="#222222" stroke-width="1.25" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-2 text-[#1F1E1B]">
+                  <span class="w-[14px] h-[14px] rounded-full border-[1.4px] border-[#8C857B] flex-shrink-0"></span>
+                  <span>Call the ryokan about late check-in</span>
+                </div>
+              </div>
+
+              <!-- Quote -->
+              <div class="mt-3 pl-2.5 border-l-[2px] border-[#CFC8B8] text-[10.8px] text-[#787268] italic">
+                “Walk slower than you think you need to.”
+              </div>
+            </div>
+
+            <!-- Pen Tool Floating Card + Bottom Bar -->
+            <div class="px-3 pb-5 z-20 flex flex-col gap-2">
+              <div class="bg-[#F9F9FB]/95 backdrop-blur-md rounded-[24px] p-3.5 shadow-[0_8px_28px_rgba(0,0,0,0.1)] border border-black/[0.05]">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-[13px] font-bold text-[#111]">Pen</span>
+                  <span class="text-[11px] text-[#8E8E93]">Ballpoint · 2 pt</span>
+                </div>
+
+                <!-- Brush Types -->
+                <div class="grid grid-cols-5 gap-1.5 mb-3">
+                  <!-- Ballpoint Selected -->
+                  <div class="bg-[#E6F1FE] border-[1.5px] border-[#0A84FF] rounded-[11px] py-1.5 px-1 flex flex-col items-center">
+                    <svg width="32" height="14" viewBox="0 0 36 16" fill="none"><path d="M3 11C10 2 24 15 33 5" stroke="#0A84FF" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span class="text-[9.5px] font-semibold text-[#0A84FF] mt-1">Ballpoint</span>
+                  </div>
+                  <!-- Gel -->
+                  <div class="bg-[#EFEFF4] rounded-[11px] py-1.5 px-1 flex flex-col items-center">
+                    <svg width="32" height="14" viewBox="0 0 36 16" fill="none"><path d="M3 11C10 2 24 15 33 5" stroke="#1D63F0" stroke-width="2.6" stroke-linecap="round"/></svg>
+                    <span class="text-[9.5px] font-medium text-[#3A3A3C] mt-1">Gel</span>
+                  </div>
+                  <!-- Pencil -->
+                  <div class="bg-[#EFEFF4] rounded-[11px] py-1.5 px-1 flex flex-col items-center">
+                    <svg width="32" height="14" viewBox="0 0 36 16" fill="none"><path d="M3 11C10 2 24 15 33 5" stroke="#787880" stroke-width="2.2" stroke-dasharray="1 1" stroke-linecap="round"/></svg>
+                    <span class="text-[9.5px] font-medium text-[#3A3A3C] mt-1">Pencil</span>
+                  </div>
+                  <!-- Marker -->
+                  <div class="bg-[#EFEFF4] rounded-[11px] py-1.5 px-1 flex flex-col items-center">
+                    <svg width="32" height="14" viewBox="0 0 36 16" fill="none"><path d="M3 11C10 2 24 15 33 5" stroke="#1D63F0" stroke-width="4" stroke-opacity="0.75" stroke-linecap="round"/></svg>
+                    <span class="text-[9.5px] font-medium text-[#3A3A3C] mt-1">Marker</span>
+                  </div>
+                  <!-- Fountain -->
+                  <div class="bg-[#EFEFF4] rounded-[11px] py-1.5 px-1 flex flex-col items-center overflow-hidden">
+                    <svg width="32" height="14" viewBox="0 0 36 16" fill="none"><path d="M3 11C10 2 24 15 33 5" stroke="#1D63F0" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    <span class="text-[9.5px] font-medium text-[#3A3A3C] mt-1">Fount</span>
+                  </div>
+                </div>
+
+                <!-- Color Swatches -->
+                <div class="flex items-center justify-between px-0.5 mb-3">
+                  <div class="w-[22px] h-[22px] rounded-full bg-[#1C1C1E] ring-2 ring-offset-2 ring-[#1C1C1E]"></div>
+                  <div class="w-[22px] h-[22px] rounded-full bg-[#1D63F0]"></div>
+                  <div class="w-[22px] h-[22px] rounded-full bg-[#C83E2B]"></div>
+                  <div class="w-[22px] h-[22px] rounded-full bg-[#2E7D32]"></div>
+                  <div class="w-[22px] h-[22px] rounded-full bg-[#7E3AF2]"></div>
+                  <div class="w-[22px] h-[22px] rounded-full bg-[#784719]"></div>
+                  <div class="w-[22px] h-[22px] rounded-full bg-[#115E59]"></div>
+                  <div class="w-[22px] h-[22px] rounded-full bg-[#D97706]"></div>
+                  <div class="w-[22px] h-[22px] rounded-full bg-gradient-to-tr from-pink-500 via-amber-400 to-blue-500 flex items-center justify-center">
+                    <div class="w-[10px] h-[10px] bg-white rounded-full"></div>
+                  </div>
+                </div>
+
+                <!-- Stroke Weight Bar -->
+                <div class="bg-[#EFEFF4] rounded-xl p-1 grid grid-cols-7 items-center text-center mb-2.5">
+                  <div class="py-1 flex flex-col items-center gap-1"><span class="w-[2px] h-[2px] rounded-full bg-[#555]"></span><span class="text-[8.5px] text-[#666]">0.5</span></div>
+                  <div class="py-1 flex flex-col items-center gap-1"><span class="w-[3px] h-[3px] rounded-full bg-[#555]"></span><span class="text-[8.5px] text-[#666]">1</span></div>
+                  <div class="py-1 bg-white rounded-lg shadow-sm flex flex-col items-center gap-1"><span class="w-[4px] h-[4px] rounded-full bg-[#111]"></span><span class="text-[8.5px] font-bold text-[#111]">2</span></div>
+                  <div class="py-1 flex flex-col items-center gap-1"><span class="w-[5.5px] h-[5.5px] rounded-full bg-[#555]"></span><span class="text-[8.5px] text-[#666]">4</span></div>
+                  <div class="py-1 flex flex-col items-center gap-1"><span class="w-[7px] h-[7px] rounded-full bg-[#555]"></span><span class="text-[8.5px] text-[#666]">6</span></div>
+                  <div class="py-1 flex flex-col items-center gap-1"><span class="w-[8.5px] h-[8.5px] rounded-full bg-[#555]"></span><span class="text-[8.5px] text-[#666]">8</span></div>
+                  <div class="py-1 flex flex-col items-center gap-1"><span class="w-[10px] h-[10px] rounded-full bg-[#111]"></span><span class="text-[8.5px] text-[#666]">12</span></div>
+                </div>
+
+                <!-- Opacity Slider -->
+                <div class="flex items-center gap-2.5 mb-2.5 px-0.5">
+                  <span class="text-[10px] text-[#8E8E93]">Opacity</span>
+                  <div class="flex-1 h-[4px] bg-[#E5E5EA] rounded-full relative">
+                    <div class="w-[88%] h-full bg-[#0A84FF] rounded-full"></div>
+                    <div class="w-[13px] h-[13px] rounded-full bg-white shadow border border-black/10 absolute top-1/2 -translate-y-1/2 left-[84%]"></div>
+                  </div>
+                  <span class="text-[10px] font-semibold text-[#111]">90%</span>
+                </div>
+
+                <!-- Saved Presets Row -->
+                <div class="flex items-center gap-1.5 overflow-hidden">
+                  <div class="bg-[#EFEFF4] px-2 py-1 rounded-full flex items-center gap-1 text-[9.5px] font-medium whitespace-nowrap">
+                    <span class="w-2 h-2 rounded-full bg-black"></span> Fine black
+                  </div>
+                  <div class="bg-[#EFEFF4] px-2 py-1 rounded-full flex items-center gap-1 text-[9.5px] font-medium whitespace-nowrap">
+                    <span class="w-2 h-2 rounded-full bg-[#1D63F0]"></span> Gel blue
+                  </div>
+                  <div class="bg-[#EFEFF4] px-2 py-1 rounded-full flex items-center gap-1 text-[9.5px] font-medium whitespace-nowrap">
+                    <span class="w-2 h-2 rounded-full bg-[#C83E2B]"></span> Brush red
+                  </div>
+                  <div class="bg-[#E6F1FE] text-[#0A84FF] px-2 py-1 rounded-full text-[9.5px] font-semibold whitespace-nowrap">
+                    + Save
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Floating Tool Dock -->
+              <div class="mx-auto bg-white/95 backdrop-blur-md rounded-full h-[40px] px-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)] flex items-center gap-5 text-[#111]">
+                <!-- Pen (Active) -->
+                <div class="relative flex flex-col items-center">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#0A84FF] absolute -bottom-2"></span>
+                </div>
+                <!-- Marker -->
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.9"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                <!-- Eraser -->
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.9"><path d="M20 20H7L3 16C2 15 2 13 3 12L13 2L22 11L20 20Z"/></svg>
+                <!-- Aa -->
+                <span class="text-[12.5px] font-semibold text-[#333]">Aa</span>
+                <!-- Ruler -->
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.9"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 6v4M10 6v3M14 6v4M18 6v3"/></svg>
+                <!-- Grid -->
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+              </div>
+            </div>
+
+            ${renderHomeIndicator(false)}
+          </div>
+        </div>
+      `;
+    }
+
+    // 5. KYOTO DAY THREE — CUSTOMIZE (STICKERS & WASHI TAPE) SCREEN
+    function buildKyotoStickersScreen() {
+      return `
+        <div class="iphone-frame">
+          <div class="iphone-screen kyoto-paper-dimmed flex flex-col justify-between relative">
+            ${renderStatusBar('light', true)}
+
+            <!-- Top Action Bar (Dimmed) -->
+            <div class="px-4 pt-0.5 flex items-center justify-between opacity-85">
+              <button class="w-[32px] h-[32px] rounded-full bg-white/80 flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <div class="flex items-center gap-2">
+                <div class="bg-white/80 h-[32px] px-3.5 rounded-full flex items-center gap-3.5 text-[#111]">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg>
+                </div>
+                <button class="w-[32px] h-[32px] rounded-full bg-[#0A84FF] text-white flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Upper Note Preview -->
+            <div class="px-5 pt-2 relative">
+              <div class="absolute right-4 -top-1 z-10">
+                <div class="w-[62px] h-[18px] washi-blue-grid opacity-85 -rotate-6 translate-y-2 -translate-x-2 rounded-[2px]"></div>
+                <div class="w-[46px] h-[54px] bg-white border-[1.5px] border-[#222] rounded-[4px] p-1 rotate-6 shadow-sm ml-3">
+                  <div class="w-full h-[33px] bg-[#D6E6F5] border border-[#222]/40 rounded-[1px]"></div>
+                </div>
+              </div>
+
+              <h1 style="font-family: var(--sf-serif);" class="text-[24px] font-semibold text-[#18181B] tracking-[-0.02em] mb-2">Kyoto, day three</h1>
+              <p class="text-[11.2px] text-[#32302C] leading-[1.52] pr-6">
+                Up early for Fushimi Inari before the crowds. The gates go on <span class="bg-[#E5CE73] px-1 rounded-[2px]">far longer</span><br/>
+                <span class="bg-[#E5CE73] px-1 rounded-[2px]">than the photos suggest</span>, and the light through them turns everything orange.
+              </p>
+
+              <div class="mt-3 flex items-center justify-between">
+                <div>
+                  <h2 class="text-[13px] font-bold text-[#18181B]">Still to do</h2>
+                  <svg width="68" height="6" viewBox="0 0 68 6" fill="none" class="mt-0.5">
+                    <path d="M1 4.2C20 1.5 45 5.2 67 2.2" stroke="#C84B31" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="mr-1 -mt-1 bg-white/80 p-1 rounded-lg">
+                  <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
+                    <path d="M11 8C11 6.5 12.5 5.5 12.5 4M16 8C16 6.5 17.5 5.5 17.5 4" stroke="#78350F" stroke-width="1.7" stroke-linecap="round"/>
+                    <path d="M7 12H21V19C21 22.866 17.866 26 14 26C10.134 26 7 22.866 7 19V12Z" fill="#FEF3C7" stroke="#222" stroke-width="1.8"/>
+                    <path d="M21 14H23.5C25.1569 14 26.5 15.3431 26.5 17C26.5 18.6569 25.1569 20 23.5 20H21" stroke="#222" stroke-width="1.8"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customize Bottom Sheet -->
+            <div class="bg-[#F9F9FB] rounded-t-[28px] pt-2 pb-6 px-4 shadow-[0_-6px_25px_rgba(0,0,0,0.08)] z-20">
+              <div class="w-8 h-1 bg-[#D8D8DC] rounded-full mx-auto mb-2"></div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-7"></div>
+                <span class="text-[13.5px] font-bold text-[#111]">Customize</span>
+                <button class="w-[28px] h-[28px] rounded-full bg-white shadow-sm flex items-center justify-center">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+              </div>
+
+              <!-- Segmented Control -->
+              <div class="bg-[#EFEFF4] p-1 rounded-full grid grid-cols-4 text-center text-[10.5px] font-medium text-[#555] mb-2.5">
+                <div class="py-1">Appearance</div>
+                <div class="py-1">Writing</div>
+                <div class="py-1 bg-white rounded-full shadow-sm font-semibold text-[#111]">Decorate</div>
+                <div class="py-1">Tools</div>
+              </div>
+
+              <!-- Filter Chips -->
+              <div class="flex items-center gap-1.5 mb-3 overflow-hidden">
+                <span class="bg-[#EFEFF4] px-2.5 py-1 rounded-full text-[10px] font-medium text-[#333]">Study</span>
+                <span class="bg-[#EFEFF4] px-2.5 py-1 rounded-full text-[10px] font-medium text-[#333]">Productivity</span>
+                <span class="bg-[#0A84FF] px-2.5 py-1 rounded-full text-[10px] font-semibold text-white">Journal</span>
+                <span class="bg-[#EFEFF4] px-2.5 py-1 rounded-full text-[10px] font-medium text-[#333]">Cute</span>
+                <span class="bg-[#EFEFF4] px-2.5 py-1 rounded-full text-[10px] font-medium text-[#333]">Minima</span>
+              </div>
+
+              <!-- Stickers 4x2 Grid -->
+              <div class="grid grid-cols-4 gap-2 mb-3">
+                <!-- Heart -->
+                <div class="bg-[#F2F2F7] rounded-[14px] h-[54px] flex items-center justify-center">
+                  <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+                    <path d="M16 26.5C16 26.5 5.5 20 5.5 11.8C5.5 8.4 8.2 6 11.2 6C13.3 6 15.1 7.2 16 8.8C16.9 7.2 18.7 6 20.8 6C23.8 6 26.5 8.4 26.5 11.8C26.5 20 16 26.5 16 26.5Z" fill="#F4B8C4" stroke="#222" stroke-width="1.8" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <!-- Flower -->
+                <div class="bg-[#F2F2F7] rounded-[14px] h-[54px] flex items-center justify-center">
+                  <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="9" r="4.2" fill="#C4B5FD" stroke="#222" stroke-width="1.6"/>
+                    <circle cx="22" cy="14" r="4.2" fill="#C4B5FD" stroke="#222" stroke-width="1.6"/>
+                    <circle cx="20" cy="21" r="4.2" fill="#C4B5FD" stroke="#222" stroke-width="1.6"/>
+                    <circle cx="12" cy="21" r="4.2" fill="#C4B5FD" stroke="#222" stroke-width="1.6"/>
+                    <circle cx="10" cy="14" r="4.2" fill="#C4B5FD" stroke="#222" stroke-width="1.6"/>
+                    <circle cx="16" cy="15.5" r="3.5" fill="#FDE047" stroke="#222" stroke-width="1.6"/>
+                  </svg>
+                </div>
+                <!-- Sparkle -->
+                <div class="bg-[#F2F2F7] rounded-[14px] h-[54px] flex items-center justify-center">
+                  <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+                    <path d="M16 4L19 13L28 16L19 19L16 28L13 19L4 16L13 13L16 4Z" fill="#FDE68A" stroke="#222" stroke-width="1.7" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <!-- Cloud -->
+                <div class="bg-[#F2F2F7] rounded-[14px] h-[54px] flex items-center justify-center">
+                  <svg width="32" height="30" viewBox="0 0 34 30" fill="none">
+                    <path d="M9.5 22H24.5C27.5 22 29.5 19.8 29.5 17C29.5 14.4 27.6 12.3 25 12.1C24.2 8.6 21.1 6 17.4 6C13.1 6 9.6 9.4 9.5 13.7C6.9 14.1 5 16.3 5 19C5 20.8 6.8 22 9.5 22Z" fill="#BFDBFE" stroke="#222" stroke-width="1.7" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <!-- Moon -->
+                <div class="bg-[#F2F2F7] rounded-[14px] h-[54px] flex items-center justify-center">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <path d="M21.5 19.5C16.5 19.5 12.5 15.5 12.5 10.5C12.5 8.5 13.1 6.7 14.2 5.2C9.6 6.1 6 10.1 6 15C6 20.5 10.5 25 16 25C20.3 25 24 22.2 25.4 18.3C24.2 19.1 22.9 19.5 21.5 19.5Z" fill="#FDE68A" stroke="#222" stroke-width="1.7" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <!-- Sun -->
+                <div class="bg-[#F2F2F7] rounded-[14px] h-[54px] flex items-center justify-center">
+                  <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="5.5" fill="#FDBA74" stroke="#222" stroke-width="1.7"/>
+                    <path d="M16 5V7.5M16 24.5V27M5 16H7.5M24.5 16H27M8.2 8.2L10 10M22 22L23.8 23.8M23.8 8.2L22 10M10 22L8.2 23.8" stroke="#222" stroke-width="1.7" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <!-- Coffee Cup -->
+                <div class="bg-[#F2F2F7] rounded-[14px] h-[54px] flex items-center justify-center">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <path d="M12 8C12 6.5 13 5.5 13 4M16 8C16 6.5 17 5.5 17 4" stroke="#78350F" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M8 12H20V18.5C20 21.8 17.3 24.5 14 24.5C10.7 24.5 8 21.8 8 18.5V12Z" fill="#FEF3C7" stroke="#222" stroke-width="1.7"/>
+                    <path d="M20 14H22C23.4 14 24.5 15.1 24.5 16.5C24.5 17.9 23.4 19 22 19H20" stroke="#222" stroke-width="1.7"/>
+                  </svg>
+                </div>
+                <!-- Polaroid -->
+                <div class="bg-[#F2F2F7] rounded-[14px] h-[54px] flex items-center justify-center">
+                  <div class="w-[22px] h-[27px] bg-white border-[1.7px] border-[#222] rounded-[2px] p-0.5">
+                    <div class="w-full h-[15px] bg-[#BFDBFE] border border-[#222]/50"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Washi Tape Section -->
+              <div class="mb-3">
+                <div class="text-[10.5px] font-medium text-[#8E8E93] mb-1.5">Washi tape</div>
+                <div class="grid grid-cols-3 gap-2">
+                  <div class="h-[24px] rounded-[7px] washi-blue-grid border border-black/5"></div>
+                  <div class="h-[24px] rounded-[7px] washi-pink-dots border border-black/5"></div>
+                  <div class="h-[24px] rounded-[7px] washi-yellow-stripes border border-black/5"></div>
+                </div>
+              </div>
+
+              <!-- Sticky Notes Section -->
+              <div>
+                <div class="text-[10.5px] font-medium text-[#8E8E93] mb-1.5">Sticky notes</div>
+                <div class="grid grid-cols-6 gap-2">
+                  <div class="h-[28px] rounded-[6px] bg-[#FEF08A]"></div>
+                  <div class="h-[28px] rounded-[6px] bg-[#FBCFE8]"></div>
+                  <div class="h-[28px] rounded-[6px] bg-[#DBEAFE]"></div>
+                  <div class="h-[28px] rounded-[6px] bg-[#DCFCE7]"></div>
+                  <div class="h-[28px] rounded-[6px] bg-[#EDE9FE]"></div>
+                  <div class="h-[28px] rounded-[6px] bg-[#FFEDD5]"></div>
+                </div>
+              </div>
+            </div>
+
+            ${renderHomeIndicator(false)}
+          </div>
+        </div>
+      `;
+    }
+
+    // 6. TEMPLATES SCREEN
+    function buildTemplatesScreen() {
+      return `
+        <div class="iphone-frame">
+          <div class="iphone-screen bg-[#DFDFE4] flex flex-col justify-between relative">
+            ${renderStatusBar('light', true)}
+
+            <!-- Dimmed Home Header -->
+            <div class="px-5 pt-0.5">
+              <div class="flex justify-end items-center gap-2">
+                <div class="bg-[#ECECEF] h-[33px] px-3 rounded-full flex items-center gap-3.5 border border-black/[0.04]">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.9"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+                </div>
+                <div class="bg-[#ECECEF] w-[33px] h-[33px] rounded-full flex items-center justify-center text-[13px] font-semibold">S</div>
+              </div>
+              <h1 class="text-[28px] font-bold tracking-[-0.03em] leading-[1.1] text-[#111] mt-1">Home</h1>
+            </div>
+
+            <!-- Templates Bottom Sheet -->
+            <div class="bg-[#F5F5F8] rounded-t-[28px] flex-1 mt-1.5 px-4 pt-2 pb-6 flex flex-col justify-between shadow-[0_-4px_25px_rgba(0,0,0,0.08)]">
+              <div>
+                <div class="w-8 h-1 bg-[#D8D8DC] rounded-full mx-auto mb-2"></div>
+                <div class="flex items-center justify-between mb-3">
+                  <button class="w-[30px] h-[30px] rounded-full bg-white shadow-sm flex items-center justify-center">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  </button>
+                  <span class="text-[13.5px] font-bold text-[#111]">New from template</span>
+                  <div class="w-7"></div>
+                </div>
+
+                <!-- Recently Used -->
+                <div class="text-[11px] font-medium text-[#8E8E93] mb-2">Recently used</div>
+                <div class="grid grid-cols-3 gap-2.5 mb-4">
+                  <!-- Card 1: Daily Journal -->
+                  <div>
+                    <div class="bg-[#EFE6D5] rounded-[14px] p-1.5 h-[108px] flex flex-col">
+                      <div class="bg-[#FBF8F1] rounded-[9px] flex-1 p-2 flex flex-col justify-between shadow-sm">
+                        <div class="text-[7px] font-bold text-[#785C38]">Today</div>
+                        <div class="space-y-1">
+                          <div class="h-[3px] w-10 bg-[#D8C7AE] rounded"></div>
+                          <div class="h-[2px] w-full bg-[#E8DFD1] rounded"></div>
+                          <div class="h-[2px] w-4/5 bg-[#E8DFD1] rounded"></div>
+                          <div class="h-[3px] w-8 bg-[#D8C7AE] rounded mt-1"></div>
+                          <div class="h-[2px] w-full bg-[#E8DFD1] rounded"></div>
+                        </div>
+                        <div class="h-[3px] w-12 bg-[#D8C7AE] rounded"></div>
+                      </div>
+                    </div>
+                    <div class="text-[11px] font-semibold text-[#111] mt-1.5">Daily Journal</div>
+                    <div class="text-[10px] text-[#8E8E93]">Today</div>
+                  </div>
+
+                  <!-- Card 2: Meeting Notes -->
+                  <div>
+                    <div class="bg-[#E2E6EC] rounded-[14px] p-1.5 h-[108px] flex flex-col">
+                      <div class="bg-white rounded-[9px] flex-1 p-2 flex flex-col justify-between shadow-sm">
+                        <div class="text-[7px] font-bold text-[#1E293B]">Meeting</div>
+                        <div class="space-y-1">
+                          <div class="h-[4px] w-full bg-[#F1F5F9] rounded"></div>
+                          <div class="h-[2px] w-3/4 bg-[#CBD5E1] rounded"></div>
+                          <div class="h-[2px] w-full bg-[#E2E8F0] rounded"></div>
+                          <div class="h-[2px] w-2/3 bg-[#E2E8F0] rounded"></div>
+                        </div>
+                        <div class="h-[2px] w-10 bg-[#94A3B8] rounded"></div>
+                      </div>
+                    </div>
+                    <div class="text-[11px] font-semibold text-[#111] mt-1.5">Meeting Notes</div>
+                    <div class="text-[10px] text-[#8E8E93]">Friday</div>
+                  </div>
+
+                  <!-- Card 3: Task List -->
+                  <div>
+                    <div class="bg-[#DCECE2] rounded-[14px] p-1.5 h-[108px] flex flex-col">
+                      <div class="bg-[#F4FBF7] rounded-[9px] flex-1 p-2 flex flex-col justify-between shadow-sm">
+                        <div class="text-[7px] font-bold text-[#166534]">To-do</div>
+                        <div class="space-y-1.5">
+                          <div class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full border border-emerald-600"></span><span class="h-[2px] flex-1 bg-emerald-200 rounded"></span></div>
+                          <div class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full border border-emerald-600"></span><span class="h-[2px] flex-1 bg-emerald-200 rounded"></span></div>
+                          <div class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full border border-emerald-600"></span><span class="h-[2px] flex-1 bg-emerald-200 rounded"></span></div>
+                        </div>
+                        <div class="h-[2px] w-8 bg-emerald-300 rounded"></div>
+                      </div>
+                    </div>
+                    <div class="text-[11px] font-semibold text-[#111] mt-1.5">Task List</div>
+                    <div class="text-[10px] text-[#8E8E93]">Last week</div>
+                  </div>
+                </div>
+
+                <!-- Popular Section -->
+                <div class="text-[11px] font-medium text-[#8E8E93] mb-1.5">Popular</div>
+                <div class="bg-white rounded-[18px] p-2.5 divide-y divide-neutral-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                  <div class="flex items-center gap-3 pb-2.5">
+                    <div class="w-[28px] h-[34px] rounded-[6px] bg-[#F2F4F8] border border-black/5 p-1 flex flex-col gap-1">
+                      <div class="h-1 w-3 bg-neutral-400 rounded"></div>
+                      <div class="h-0.5 w-full bg-neutral-300 rounded"></div>
+                      <div class="h-0.5 w-full bg-neutral-300 rounded"></div>
+                    </div>
+                    <div>
+                      <div class="text-[12px] font-semibold text-[#111]">Daily Planner</div>
+                      <div class="text-[10.5px] text-[#8E8E93]">Priorities, schedule, notes</div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-3 py-2.5">
+                    <div class="w-[28px] h-[34px] rounded-[6px] bg-[#F2F4F8] border border-black/5 p-1 flex flex-col gap-1">
+                      <div class="h-1 w-3 bg-neutral-400 rounded"></div>
+                      <div class="grid grid-cols-3 gap-0.5 flex-1">
+                        <div class="bg-neutral-300 rounded-[1px]"></div>
+                        <div class="col-span-2 bg-neutral-200 rounded-[1px]"></div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="text-[12px] font-semibold text-[#111]">Cornell Notes</div>
+                      <div class="text-[10.5px] text-[#8E8E93]">Cues, notes and a summary</div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-3 pt-2.5">
+                    <div class="w-[28px] h-[34px] rounded-[6px] bg-[#EBF3FE] border border-blue-200/50 p-1 flex flex-col gap-1">
+                      <div class="h-1 w-3 bg-blue-400 rounded"></div>
+                      <div class="h-0.5 w-full bg-blue-200 rounded"></div>
+                      <div class="h-0.5 w-3/4 bg-blue-200 rounded"></div>
+                    </div>
+                    <div>
+                      <div class="text-[12px] font-semibold text-[#111]">Travel Planner</div>
+                      <div class="text-[10.5px] text-[#8E8E93]">Flights, days, bookings</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Browse All Button -->
+                <div class="mt-2.5 bg-white rounded-[14px] px-3.5 py-2.5 flex items-center justify-between shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                  <span class="text-[12px] font-semibold text-[#0A84FF]">Browse all 40 templates</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+                </div>
+
+                <!-- AI Describe a template -->
+                <div class="mt-2.5 bg-white rounded-[16px] px-3.5 py-2.5 flex items-center gap-2.5 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#0A84FF" class="flex-shrink-0">
+                    <path d="M11 3L13 8.5L18.5 10.5L13 12.5L11 18L9 12.5L3.5 10.5L9 8.5L11 3Z"/>
+                  </svg>
+                  <div>
+                    <div class="text-[11.5px] font-semibold text-[#0A84FF]">Describe a template</div>
+                    <div class="text-[9.8px] text-[#8E8E93]">e.g. “Client call with budget and next steps” · Pro</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            ${renderHomeIndicator(false)}
+          </div>
+        </div>
+      `;
+    }
+
+    // 7. SCANNING PAGES INTO A NOTE SCREEN
+    function buildScanScreen(showTouchDot = false) {
+      return `
+        <div class="iphone-frame">
+          <div class="iphone-screen bg-[#F4F4F7] flex flex-col justify-between relative">
+            ${renderStatusBar('light', true)}
+
+            <!-- Top Header -->
+            <div class="px-4 pt-1 flex items-center justify-between">
+              <button class="w-[32px] h-[32px] rounded-full bg-white shadow-sm flex items-center justify-center">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </button>
+              <div class="text-center">
+                <div class="text-[13px] font-bold text-[#111] leading-tight">Scan</div>
+                <div class="text-[10px] text-[#8E8E93]">2 pages</div>
+              </div>
+              <button class="w-[32px] h-[32px] rounded-full bg-[#0A84FF] text-white shadow-sm flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </button>
+            </div>
+
+            <!-- Scanned Document Preview -->
+            <div class="flex-1 flex flex-col items-center justify-center relative px-6 overflow-hidden">
+              <div class="relative w-full flex items-center justify-center">
+                <!-- Main Scanned Page -->
+                <div class="w-[218px] h-[310px] bg-[#FAF9F2] rounded-[4px] shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-5 flex flex-col gap-2.5 border border-black/[0.04]">
+                  <div class="h-[8px] w-[105px] bg-[#48484A] rounded-[1px] mb-1"></div>
+                  <div class="h-[4px] w-full bg-[#C7C7CC] rounded-[1px]"></div>
+                  <div class="h-[4px] w-[92%] bg-[#C7C7CC] rounded-[1px]"></div>
+                  <div class="h-[4px] w-[84%] bg-[#C7C7CC] rounded-[1px]"></div>
+                  <div class="h-[4px] w-[88%] bg-[#C7C7CC] rounded-[1px]"></div>
+
+                  <div class="h-[7px] w-[68px] bg-[#48484A] rounded-[1px] mt-3 mb-0.5"></div>
+                  <div class="h-[4px] w-[95%] bg-[#C7C7CC] rounded-[1px]"></div>
+                  <div class="h-[4px] w-[88%] bg-[#C7C7CC] rounded-[1px]"></div>
+                  <div class="h-[4px] w-[76%] bg-[#C7C7CC] rounded-[1px]"></div>
+                  <div class="h-[4px] w-[82%] bg-[#C7C7CC] rounded-[1px]"></div>
+                  <div class="h-[4px] w-[60%] bg-[#C7C7CC] rounded-[1px]"></div>
+                </div>
+
+                <!-- 2nd Page Peeking on Right -->
+                <div class="w-[30px] h-[296px] bg-[#FAF9F2] rounded-l-[4px] shadow-md p-3 flex flex-col gap-2.5 absolute -right-8 opacity-90 border border-black/[0.04]">
+                  <div class="h-[8px] w-6 bg-[#48484A] rounded-[1px]"></div>
+                  <div class="h-[4px] w-6 bg-[#C7C7CC] rounded-[1px]"></div>
+                  <div class="h-[4px] w-6 bg-[#C7C7CC] rounded-[1px]"></div>
+                  <div class="h-[4px] w-6 bg-[#C7C7CC] rounded-[1px] mt-4"></div>
+                  <div class="h-[4px] w-6 bg-[#C7C7CC] rounded-[1px]"></div>
+                </div>
+              </div>
+
+              <!-- Dots Indicator -->
+              <div class="flex items-center gap-1.5 mt-4 mb-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#111]"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-[#C7C7CC]"></span>
+              </div>
+
+              <!-- OCR Text Found Pill -->
+              <div class="relative inline-flex items-center gap-1.5 bg-[#E6F2FF] px-3.5 py-1.5 rounded-full text-[11px]">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="#0A84FF">
+                  <path d="M11 3L13 8.5L18.5 10.5L13 12.5L11 18L9 12.5L3.5 10.5L9 8.5L11 3Z"/>
+                </svg>
+                <span class="text-[#1D3557] font-medium">Text found · 142 words</span>
+                <span class="text-[#0A84FF] font-semibold ml-0.5">Copy</span>
+                ${showTouchDot ? `<div class="touch-dot" style="top: -2px; left: 38px;"></div>` : ''}
+              </div>
+            </div>
+
+            <!-- Bottom Floating Action Bar -->
+            <div class="pb-7 flex justify-center">
+              <div class="bg-white rounded-full h-[42px] px-6 shadow-[0_4px_20px_rgba(0,0,0,0.07)] flex items-center gap-6 text-[#111]">
+                <!-- Rotate -->
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                <!-- Crop -->
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>
+                <!-- Add Page -->
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+                <!-- Delete (Red) -->
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FF3B30" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                <!-- Scan Text -->
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3M7 12h10"/></svg>
+              </div>
+            </div>
+
+            ${renderHomeIndicator(false)}
+          </div>
+        </div>
+      `;
+    }
+
+    // 8. FOLDERS SCREEN
+    function buildFoldersScreen(showTouchDot = true) {
+      const folders = [
+        { name: 'Inbox', count: 14, color: '#64748B', icon: `<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>` },
+        { name: 'Ideas', count: 18, color: '#D97706', icon: `<path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/>` },
+        { name: 'Work', count: 24, color: '#92400E', icon: `<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>` },
+        { name: 'Meetings', count: 7, color: '#7C3AED', icon: `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>` },
+        { name: 'To-dos', count: 9, color: '#16A34A', icon: `<circle cx="5" cy="7" r="2"/><path d="M10 7h10"/><circle cx="5" cy="17" r="2"/><path d="M10 17h10"/>` },
+        { name: 'Travel', count: 9, color: '#0D9488', icon: `<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3"/>` },
+        { name: 'Journal', count: 35, color: '#BE185D', icon: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>` },
+        { name: 'Personal', count: 12, color: '#52525B', icon: `<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>` }
+      ];
+
+      return `
+        <div class="iphone-frame">
+          <div class="iphone-screen bg-[#F2F2F6] flex flex-col justify-between relative">
+            <div>
+              ${renderStatusBar('light', true)}
+
+              <!-- Top Nav -->
+              <div class="px-4 pt-0.5 flex items-center justify-between">
+                <button class="w-[32px] h-[32px] rounded-full bg-white shadow-sm flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <div class="bg-white h-[32px] px-3 rounded-full shadow-sm flex items-center gap-3">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.9"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><path d="M12 11v6M9 14h6"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#111"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg>
+                </div>
+              </div>
+
+              <!-- Title -->
+              <div class="px-5 mt-2 mb-3">
+                <h1 class="text-[26px] font-bold tracking-[-0.03em] leading-tight text-[#111]">Folders</h1>
+                <p class="text-[11.5px] text-[#8E8E93]">8 folders · 128 notes</p>
+              </div>
+
+              <!-- Folders White Group List -->
+              <div class="mx-4 bg-white rounded-[20px] px-3.5 py-1 divide-y divide-neutral-100 shadow-[0_1px_4px_rgba(0,0,0,0.02)] relative">
+                ${folders.map(f => `
+                  <div class="py-2.5 flex items-center justify-between text-[13px]">
+                    <div class="flex items-center gap-3">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${f.color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${f.icon}</svg>
+                      <span class="font-medium text-[#111]">${f.name}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 text-[#8E8E93] text-[12px]">
+                      <span>${f.count}</span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+                    </div>
+                  </div>
+                `).join('')}
+
+                ${showTouchDot ? `<div class="touch-dot" style="top: 112px; right: 20px;"></div>` : ''}
+              </div>
+
+              <!-- Footer Helper Caption -->
+              <p class="px-6 mt-2.5 text-[10.5px] text-[#8E8E93] leading-[1.4]">
+                Quick notes land in Inbox until you file them. Drag to reorder; swipe left to rename or delete.
+              </p>
+            </div>
+
+            ${renderHomeIndicator(false)}
+          </div>
+        </div>
+      `;
+    }
+
+    // 9. ASK YOUR NOTES SCREEN
+    function buildAskNotesScreen() {
+      return `
+        <div class="iphone-frame">
+          <div class="iphone-screen bg-[#F2F2F6] flex flex-col justify-between relative">
+            <div>
+              <div class="bg-white pb-2.5 border-b border-black/[0.04]">
+                ${renderStatusBar('light', true)}
+                <div class="text-center text-[13px] font-bold text-[#111] mt-1">Ask your notes</div>
+              </div>
+
+              <div class="px-4 pt-3">
+                <h1 class="text-[17.5px] font-bold text-[#111] tracking-[-0.02em] leading-[1.25] mb-3">
+                  When do I need to book the ryokan?
+                </h1>
+
+                <!-- AI Answer Card -->
+                <div class="bg-white rounded-[20px] p-4 shadow-[0_1px_4px_rgba(0,0,0,0.03)] mb-4">
+                  <div class="flex items-center gap-1.5 text-[11px] font-semibold text-[#0A84FF] mb-2">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#0A84FF">
+                      <path d="M11 3L13 8.5L18.5 10.5L13 12.5L11 18L9 12.5L3.5 10.5L9 8.5L11 3Z"/>
+                    </svg>
+                    <span>From your notes</span>
+                  </div>
+
+                  <p class="text-[12.2px] text-[#1C1C1E] leading-[1.48] mb-3">
+                    Before the 14th. Your JR passes arrive Tuesday<sup class="text-[#0A84FF] font-bold">1</sup> and Hakone comes after Kyoto, so the ryokan needs booking this week<sup class="text-[#0A84FF] font-bold">2</sup>.
+                  </p>
+
+                  <!-- Citation Chips -->
+                  <div class="space-y-1.5 mb-3">
+                    <div class="inline-flex items-center gap-1.5 bg-[#F2F2F7] px-2.5 py-1 rounded-full text-[11px]">
+                      <span class="w-4 h-4 rounded-full bg-[#DCEBFA] text-[#0A84FF] text-[9.5px] font-bold flex items-center justify-center">1</span>
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      <span class="font-semibold text-[#111]">Japan, ten days</span>
+                    </div>
+                    <br/>
+                    <div class="inline-flex items-center gap-1.5 bg-[#F2F2F7] px-2.5 py-1 rounded-full text-[11px]">
+                      <span class="w-4 h-4 rounded-full bg-[#DCEBFA] text-[#0A84FF] text-[9.5px] font-bold flex items-center justify-center">2</span>
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      <span class="font-semibold text-[#111]">Ryokan booking</span>
+                    </div>
+                  </div>
+
+                  <div class="pt-2 border-t border-neutral-100 flex items-center justify-between text-[#8E8E93]">
+                    <span class="text-[10px]">Only from your notes</span>
+                    <div class="flex items-center gap-3">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sources Section -->
+                <div class="text-[13px] font-bold text-[#111] mb-2">Sources</div>
+                <div class="bg-white rounded-[18px] p-3.5 divide-y divide-neutral-100 shadow-[0_1px_4px_rgba(0,0,0,0.02)]">
+                  <div class="pb-2.5">
+                    <div class="flex items-center justify-between mb-0.5">
+                      <span class="text-[12px] font-bold text-[#111]">Japan, ten days</span>
+                      <span class="text-[10px] text-[#8E8E93]">6:40 PM</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 text-[11px] text-[#68686E]">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#6366F1]"></span>
+                      <span>JR pass arrives Tuesday. Book the ryokan</span>
+                    </div>
+                  </div>
+                  <div class="pt-2.5">
+                    <div class="flex items-center justify-between mb-0.5">
+                      <span class="text-[12px] font-bold text-[#111]">Ryokan booking</span>
+                      <span class="text-[10px] text-[#8E8E93]">Mon</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 text-[11px] text-[#68686E]">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#6366F1]"></span>
+                      <span>Late check-in, train gets in at 9:40</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Search Bar -->
+            <div class="px-4 pb-6 flex items-center gap-2">
+              <button class="w-[38px] h-[38px] rounded-full bg-white shadow-sm flex items-center justify-center text-[#111]">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L3 10.5h2.5V20h5v-5.5h3V20h5v-9.5H21L12 3z"/></svg>
+              </button>
+              <div class="flex-1 h-[38px] bg-white rounded-full px-3.5 shadow-sm flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#64748B"><path d="M11 3L13 8.5L18.5 10.5L13 12.5L11 18L9 12.5L3.5 10.5L9 8.5L11 3Z"/></svg>
+                  <span class="text-[12px] text-[#111]">When do I need to book th...</span>
+                </div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg>
+              </div>
+            </div>
+
+            ${renderHomeIndicator(false)}
+          </div>
+        </div>
+      `;
+    }
+
+    // 10. A DARK THEME ("Late thoughts") SCREEN
+    function buildDarkThemeNoteScreen() {
+      return `
+        <div class="iphone-frame">
+          <div class="iphone-screen dark-lined-paper text-white flex flex-col justify-between relative">
+            <div>
+              ${renderStatusBar('dark', false)}
+
+              <!-- Top Controls -->
+              <div class="px-4 pt-0.5 flex items-center justify-between relative z-20">
+                <button class="w-[32px] h-[32px] rounded-full bg-[#1C1F2B] border border-white/10 flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <div class="flex items-center gap-2">
+                  <div class="bg-[#1C1F2B] border border-white/10 h-[32px] px-3.5 rounded-full flex items-center gap-3.5 text-white">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg>
+                  </div>
+                  <button class="w-[32px] h-[32px] rounded-full bg-[#0A84FF] text-white flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Note Body -->
+              <div class="px-5 pt-4 relative">
+                <!-- Crescent Moon Sticker Top Right -->
+                <div class="absolute right-4 top-1 z-20">
+                  <svg width="42" height="42" viewBox="0 0 44 44" fill="none">
+                    <path d="M29 26.5C22.5 26.5 17.5 21.5 17.5 15C17.5 12.2 18.4 9.7 20 7.7C13.8 8.9 9 14.3 9 20.8C9 28.2 15 34.2 22.4 34.2C28.2 34.2 33.1 30.5 35 25.3C33.3 26.1 31.2 26.5 29 26.5Z" fill="#EAB308" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/>
+                    <path d="M29 26.5C22.5 26.5 17.5 21.5 17.5 15C17.5 12.2 18.4 9.7 20 7.7C13.8 8.9 9 14.3 9 20.8C9 28.2 15 34.2 22.4 34.2C28.2 34.2 33.1 30.5 35 25.3C33.3 26.1 31.2 26.5 29 26.5Z" fill="#FACC15" stroke="#1E1B4B" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+
+                <h1 style="font-family: var(--sf-serif);" class="text-[24px] font-semibold tracking-[-0.01em] mb-3">Late thoughts</h1>
+
+                <p style="font-family: var(--sf-serif);" class="text-[13px] text-[#E2E8F0] leading-[1.65] mb-4 pr-4">
+                  The best ideas this month came from walking, not from sitting with a blank page.
+                </p>
+
+                <div style="font-family: var(--sf-serif);" class="pl-3 border-l-[2px] border-[#3B82F6]/60 italic text-[12.5px] text-[#94A3B8] leading-[1.6] mb-4">
+                  Make the thing you wish existed,<br/>
+                  then make it quieter.
+                </div>
+
+                <p style="font-family: var(--sf-serif);" class="text-[13px] text-[#E2E8F0] leading-[1.65]">
+                  Try: one hour of <span class="bg-[#334155] px-1 py-0.5 rounded-[3px]">no screens</span> after dinner, three nights this week.
+                </p>
+
+                <!-- Vertical Translucent Ruler Overlay on Right -->
+                <div class="w-[82px] h-[340px] bg-white/[0.14] backdrop-blur-[2px] rounded-[18px] border border-white/[0.15] absolute right-2 top-[76px] flex flex-col justify-between py-4 items-end pr-2 pointer-events-none">
+                  ${Array.from({length: 14}).map((_, i) => `<div class="h-[1px] ${i % 2 === 0 ? 'w-3 bg-white/40' : 'w-1.5 bg-white/25'}"></div>`).join('')}
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Dark Tool Dock -->
+            <div class="pb-6 flex justify-center relative z-20">
+              <div class="bg-[#1C1F2B]/90 backdrop-blur-md border border-white/15 rounded-full h-[40px] px-5 flex items-center gap-5 text-white">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.9"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+                <div class="relative flex flex-col items-center">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#0A84FF] absolute -bottom-2"></span>
+                </div>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.9"><path d="M20 20H7L3 16C2 15 2 13 3 12L13 2L22 11L20 20Z"/></svg>
+                <span class="text-[12.5px] font-semibold text-[#CBD5E1]">Aa</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.9"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 6v4M10 6v3M14 6v4M18 6v3"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+              </div>
+            </div>
+
+            ${renderHomeIndicator(true)}
+          </div>
+        </div>
+      `;
+    }
+
+    function wrapWithCaption(phoneHtml, captionText) {
+      return `
+        <div class="flex flex-col items-start">
+          ${phoneHtml}
+          <p class="mt-3 ml-1.5 text-[11.5px] text-[#7C7C82] leading-[1.35] max-w-[320px]">${captionText}</p>
+        </div>
+      `;
+    }
+
+    function switchView(view) {
+      const wrapper = document.getElementById('screens-wrapper');
+      const slideCounter = document.getElementById('slide-counter');
+      const slideNum = document.getElementById('slide-num');
+      const leftIcon = document.getElementById('left-stack-icon');
+
+      // Update active pill styling
+      document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.className = 'view-btn px-3 py-1.5 rounded-full text-[12px] font-medium text-neutral-600 hover:text-black transition whitespace-nowrap';
+      });
+      const activeBtn = document.getElementById(`btn-${view}`);
+      if (activeBtn) {
+        activeBtn.className = 'view-btn px-3 py-1.5 rounded-full text-[12px] font-medium bg-[#111] text-white transition whitespace-nowrap';
+      }
+
+      slideCounter.classList.add('hidden');
+      leftIcon.classList.add('hidden');
+
+      if (view === 'all') {
+        leftIcon.classList.remove('hidden');
+        wrapper.innerHTML = `
+          ${wrapWithCaption(buildHomeScreen('light'), 'Home screen (Light mode) — Continue writing, To-dos, Favourites, Folders')}
+          ${wrapWithCaption(buildHomeScreen('dark'), 'Home screen (Dark mode) — True black OLED theme')}
+          ${wrapWithCaption(buildNewNoteScreen('text'), 'A typed note, with a suggested to-do and a suggested folder')}
+          ${wrapWithCaption(buildKyotoPenScreen(), 'Ballpoint, gel, pencil, marker')}
+          ${wrapWithCaption(buildKyotoStickersScreen(), 'Stickers and washi tape')}
+          ${wrapWithCaption(buildTemplatesScreen(), 'Templates')}
+          ${wrapWithCaption(buildScanScreen(true), 'Scanning pages into a note')}
+          ${wrapWithCaption(buildFoldersScreen(true), 'Folders')}
+          ${wrapWithCaption(buildAskNotesScreen(), 'Ask your notes')}
+          ${wrapWithCaption(buildDarkThemeNoteScreen(), 'A dark theme')}
+        `;
+      } else if (view === 'shot1') {
+        // Exact Screenshot 1: New Note Phone on Left + Editorial Brief Text on Right
+        leftIcon.classList.remove('hidden');
+        wrapper.innerHTML = `
+          <div class="flex flex-col lg:flex-row items-start gap-16 xl:gap-28 max-w-6xl mx-auto pt-2">
+            ${wrapWithCaption(buildNewNoteScreen('text'), 'A typed note, with a suggested to-do and a suggested folder')}
+            <div class="max-w-[540px] pt-4 space-y-6 text-[18px] leading-[1.6] tracking-[-0.015em]">
+              <p class="text-[#111111] font-normal">
+                The brief I wrote for myself was one line: open the app and start writing within three seconds.
+              </p>
+              <p class="text-[#6E6E73]">
+                Everything that normally comes first — a title, a folder, a kind of note — I moved to afterwards. A note lands in an Inbox, and the app suggests where it might belong.
+              </p>
+              <p class="text-[#6E6E73]">
+                I also wanted it to feel like it belongs on an iPhone, not like a concept shot.
+              </p>
+            </div>
+          </div>
+        `;
+      } else if (view === 'shot2') {
+        // Exact Screenshot 2: Home Light Mode + 01 / 06 + Right Editorial Typography
+        slideCounter.classList.remove('hidden');
+        slideNum.textContent = '01';
+        wrapper.innerHTML = `
+          <div class="flex flex-col lg:flex-row items-start gap-16 xl:gap-28 max-w-6xl mx-auto">
+            ${buildHomeScreen('light')}
+            <div class="max-w-[460px] pt-2 select-none">
+              <div class="text-[12px] text-[#98989F] font-medium mb-2">01</div>
+              <div class="text-[13px] font-semibold tracking-[0.08em] text-[#111] uppercase mb-4">ONE BAR, THREE ACTIONS</div>
+              <h2 class="text-[44px] font-bold tracking-[-0.035em] leading-[1.08] text-[#111] mb-8">
+                “What’s on your mind?” is the tab bar’s companion — a camera, a mic, and a note in the same thumb reach.
+              </h2>
+              <div class="text-[13px] text-[#8E8E93] mb-1.5">Why</div>
+              <p class="text-[19px] text-[#68686E] leading-[1.45] mb-16">
+                The first interaction shouldn’t be choosing how to create.
+              </p>
+
+              <div class="opacity-45">
+                <div class="text-[12px] text-[#98989F] font-medium mb-2">02</div>
+                <div class="text-[13px] font-semibold tracking-[0.08em] text-[#68686E] uppercase mb-3">THE BAR BECOMES THE SHEET</div>
+                <p class="text-[36px] font-bold tracking-[-0.03em] leading-[1.12] text-[#68686E]">
+                  Start typing and it turns into a note with a single tap.
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (view === 'shot3') {
+        // Exact Screenshot 3: 03 / 06 New Note Centered
+        slideCounter.classList.remove('hidden');
+        slideNum.textContent = '03';
+        wrapper.innerHTML = `
+          <div class="mx-auto">
+            ${buildNewNoteScreen('keyboard')}
+          </div>
+        `;
+      } else if (view === 'shot4') {
+        // Exact Screenshot 4: 04 / 06 Dark Mode Home Centered
+        slideCounter.classList.remove('hidden');
+        slideNum.textContent = '04';
+        wrapper.innerHTML = `
+          <div class="mx-auto">
+            ${buildHomeScreen('dark')}
+          </div>
+        `;
+      } else if (view === 'shot5') {
+        // Exact Screenshot 5: Pen, Stickers, Templates, Scan, Folders
+        leftIcon.classList.remove('hidden');
+        wrapper.innerHTML = `
+          ${wrapWithCaption(buildKyotoPenScreen(), 'Ballpoint, gel, pencil, marker')}
+          ${wrapWithCaption(buildKyotoStickersScreen(), 'Stickers and washi tape')}
+          ${wrapWithCaption(buildTemplatesScreen(), 'Templates')}
+          ${wrapWithCaption(buildScanScreen(true), 'Scanning pages into a note')}
+          ${wrapWithCaption(buildFoldersScreen(false), 'Folders')}
+        `;
+      } else if (view === 'shot6') {
+        // Exact Screenshot 6: Scan, Folders, Ask your notes, Dark theme
+        wrapper.innerHTML = `
+          ${wrapWithCaption(buildScanScreen(false), 'Scanning pages into a note')}
+          ${wrapWithCaption(buildFoldersScreen(true), 'Folders')}
+          ${wrapWithCaption(buildAskNotesScreen(), 'Ask your notes')}
+          ${wrapWithCaption(buildDarkThemeNoteScreen(), 'A dark theme')}
+        `;
+      }
+    }
+
+    function triggerQuickNoteDemo() {
+      switchView('shot3');
+    }
+
+    // Initialize with All 10 Screens Showcase
+    window.onload = function() {
+      switchView('all');
+    };
+  </script>
+</body>
+</html>

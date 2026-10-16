@@ -29,13 +29,13 @@ else {
 const lines = skillMd.split('\n').length;
 if (lines > 500) err(`SKILL.md: ${lines} lines (keep under 500; move detail into references/)`);
 
-// 3. Every `references/...` or `assets/...` path mentioned in any markdown file must exist.
+// 3. Every `references/`, `assets/` or `examples/` path mentioned in any markdown file must exist.
 const files = (function walk(dir) {
   return readdirSync(dir).flatMap(n => (statSync(join(dir, n)).isDirectory() ? walk(join(dir, n)) : [join(dir, n)]));
 })(SKILL);
 for (const file of files.filter(f => f.endsWith('.md'))) {
   const text = readFileSync(file, 'utf8');
-  for (const [, p] of text.matchAll(/`((?:references|assets)\/[\w./-]+?)`/g)) {
+  for (const [, p] of text.matchAll(/`((?:references|assets|examples)\/[\w./-]+?)`/g)) {
     const target = join(SKILL, p.replace(/\/$/, ''));
     if (!existsSync(target)) err(`${file.slice(ROOT.length + 1)}: broken path \`${p}\``);
   }
