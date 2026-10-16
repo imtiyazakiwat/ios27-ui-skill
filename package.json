@@ -1,6 +1,6 @@
 {
   "name": "ios27-ui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "iOS 27 Liquid Glass UI skill for AI coding agents (Claude Code, Cursor, Codex, Kiro, Copilot, Windsurf): design, audit and build Apple HIG screens in SwiftUI, React and Next.js.",
   "type": "module",
   "bin": {

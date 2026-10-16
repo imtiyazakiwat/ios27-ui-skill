@@ -73,12 +73,56 @@
   --lens: rgba(0, 0, 0, 0.07);
   --dim: rgba(0, 0, 0, 0.32);
 
-  /* SF Pro on Apple devices; Inter (self-hosted via next/font) elsewhere. */
+  /* SF Pro on Apple devices; Inter (self-hosted via next/font) elsewhere.
+     --font-inter must always be defined: an undefined var() inside font-family invalidates the whole
+     declaration and drops the page to the browser default serif. next/font overrides this default. */
+  --font-inter: "Inter";
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", var(--font-inter), "Inter", "Segoe UI", Roboto, system-ui, sans-serif;
   --font-rounded: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, var(--font-inter), "Inter", system-ui, sans-serif;
 
   /* Motion */
   --ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* ---- Quiet surfaces (references/visual-language.md) -------------------- */
+  /* Editorial serif for user content only: New York on Apple, Newsreader on the web. */
+  --font-serif: ui-serif, "New York", "Newsreader", Georgia, serif;
+  --tracking-title: -0.03em;
+  --tracking-headline: -0.015em;
+  --tracking-body: -0.01em;
+  /* Surfaces: separation by tone, not lines */
+  --surface-0: #f2f2f6;            /* page */
+  --surface-1: #ffffff;            /* cards, groups, chrome pills */
+  --surface-sheet: #f9f9fb;        /* sheet body */
+  --surface-dimmed: #dfdfe4;       /* page behind a sheet (tone dim, no black scrim) */
+  --chrome-dimmed: #ececef;        /* pills on a dimmed page */
+  --tab-lens: #e5e6eb;             /* selected tab capsule */
+  /* Ink: three levels, then opacity. Values meet WCAG AA on surface-0 and surface-1. */
+  --ink-1: #111111;
+  --ink-2: #68686e;                /* 5.5:1 on white */
+  --ink-3: #6c6c72;                /* 5.2:1 on white; metadata */
+  --ink-icon: #6b7280;             /* header glyphs */
+  --ink-placeholder: #8e8e93;      /* placeholders/disabled only (3.3:1) */
+  --chevron: #c7c7cc;
+  /* One accent */
+  --accent: #1b64f2;               /* 5.1:1 on white */
+  --accent-soft: #e6f2ff;          /* AI suggestion / tinted chip */
+  --accent-on-soft: #1d3557;
+  /* Edges */
+  --hairline: rgba(0, 0, 0, 0.02);       /* card */
+  --hairline-chrome: rgba(0, 0, 0, 0.045);
+  --hairline-row: rgba(0, 0, 0, 0.05);   /* in-group separators */
+  /* Shadows: soft, wide, low opacity */
+  --shadow-whisper: 0 1px 4px rgba(0, 0, 0, 0.02);
+  --shadow-chrome: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-float: 0 6px 20px rgba(0, 0, 0, 0.06);
+  --shadow-sheet: 0 -4px 25px rgba(0, 0, 0, 0.08);
+  --shadow-accent: 0 2px 6px color-mix(in srgb, var(--accent) 35%, transparent);
+  /* Radii (concentric family) */
+  --radius-tile: 22px;
+  --radius-group: 20px;
+  --radius-preview: 14px;
+  --radius-preview-inner: 9px;
+  --radius-sheet: 28px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -122,6 +166,29 @@
     --glass-shadow: 0 10px 34px rgba(0, 0, 0, 0.55), 0 1px 4px rgba(0, 0, 0, 0.4);
     --lens: rgba(255, 255, 255, 0.12);
     --dim: rgba(0, 0, 0, 0.5);
+    /* Quiet surfaces, dark: no shadows on black, rims instead */
+    --surface-0: #000000;
+    --surface-1: #161618;
+    --surface-sheet: #1c1c1e;
+    --surface-dimmed: #0a0a0b;
+    --chrome-dimmed: #1c1c1e;
+    --tab-lens: #252528;
+    --ink-1: #ffffff;
+    --ink-2: #98989f;
+    --ink-3: #8e8e93;              /* 5.5:1 on #161618 */
+    --ink-icon: #a1a1aa;
+    --ink-placeholder: #636366;
+    --chevron: #48484a;
+    --accent: #0a84ff;             /* 4.9:1 on #161618 */
+    --accent-soft: rgba(10, 132, 255, 0.16);
+    --accent-on-soft: #cfe3ff;
+    --hairline: rgba(255, 255, 255, 0.06);
+    --hairline-chrome: rgba(255, 255, 255, 0.12);
+    --hairline-row: rgba(255, 255, 255, 0.07);
+    --shadow-whisper: none;
+    --shadow-chrome: none;
+    --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-sheet: 0 -4px 25px rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -138,5 +205,17 @@
     --label-2: rgba(60, 60, 67, 0.85);
     --separator: rgba(60, 60, 67, 0.5);
     --glass-rim: rgba(0, 0, 0, 0.3);
+    --hairline: rgba(0, 0, 0, 0.12);
+    --hairline-chrome: rgba(0, 0, 0, 0.14);
+    --hairline-row: rgba(0, 0, 0, 0.12);
+  }
+}
+@media (prefers-color-scheme: dark) and (prefers-contrast: more) {
+  :root {
+    --hairline: rgba(255, 255, 255, 0.18);
+    --hairline-chrome: rgba(255, 255, 255, 0.22);
+    --hairline-row: rgba(255, 255, 255, 0.18);
+    --ink-2: #c7c7cc;
+    --ink-3: #aeaeb2;
   }
 }
