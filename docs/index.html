@@ -8,6 +8,7 @@
   <meta name="keywords" content="iOS 27, Liquid Glass, Apple HIG, Human Interface Guidelines, agent skill, Claude Code skill, Cursor rules, Codex, Kiro, GitHub Copilot, SwiftUI, React, Next.js, iOS UI, design system">
   <meta name="author" content="Imtiyaz Akiwat">
   <link rel="canonical" href="https://imtiyazakiwat.github.io/ios27-ui-skill/">
+  <link rel="describedby" type="text/markdown" href="llms.txt">
   <meta name="theme-color" content="#0b1020">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a84ff'/%3E%3Cpath d='M32 18v28M18 32h28' stroke='white' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
 
@@ -44,13 +45,15 @@
         "@type": "FAQPage",
         "mainEntity": [
           { "@type": "Question", "name": "What is ios27-ui?",
-            "acceptedAnswer": { "@type": "Answer", "text": "An open-source agent skill (SKILL.md plus references) that teaches AI coding agents Apple's iOS 27 design language: Liquid Glass on the navigation layer, HIG components, spring motion and native gestures." } },
+            "acceptedAnswer": { "@type": "Answer", "text": "An open-source agent skill (a SKILL.md file plus references) that teaches AI coding agents Apple's iOS 27 design language: Liquid Glass on the navigation layer, Human Interface Guidelines components, spring motion and native gestures." } },
           { "@type": "Question", "name": "Which AI coding tools does it support?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Claude Code, Kiro, Codex and other tools that read .agents/skills, plus summary rules for Cursor, Windsurf and GitHub Copilot." } },
-          { "@type": "Question", "name": "How do I install it?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Run npx ios27-ui in your project. Alternatively use npx skills add imtiyazakiwat/ios27-ui-skill, or add it as a Claude Code plugin marketplace." } },
+            "acceptedAnswer": { "@type": "Answer", "text": "Claude Code, Kiro, Codex and other tools that read .agents/skills get the full skill. Cursor, Windsurf and GitHub Copilot get summary rules that point to it." } },
           { "@type": "Question", "name": "Does it work for web apps or only SwiftUI?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Both. It covers React, Next.js and CSS web apps, and maps every pattern to SwiftUI and UIKit system components for native apps." } }
+            "acceptedAnswer": { "@type": "Answer", "text": "Both. Web apps in React, Next.js or CSS follow the same patterns and behaviour as iOS. For native apps it tells the agent to use SwiftUI and UIKit system components instead of re-skinning them." } },
+          { "@type": "Question", "name": "Is this made by Apple?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. It's an independent open-source project based on Apple's public Human Interface Guidelines and WWDC sessions. Exact glass values aren't published by Apple, so they're approximations." } },
+          { "@type": "Question", "name": "How do I contribute?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Corrections backed by an Apple source are the most valuable. See CONTRIBUTING.md and the good first issues." } }
         ]
       }
     ]
@@ -59,13 +62,14 @@
 
   <style>
     :root {
-      --bg: #f2f2f7; --card: #fff; --label: #000; --secondary: #3c3c4399; --sep: #c6c6c8;
-      --tint: #0a84ff; --green: #30d158; --radius: 14px;
+      /* Light values tuned for WCAG AA (>= 4.5:1 on #fff and #f2f2f7): secondary 5.7:1, tint 5.0:1 */
+      --bg: #f2f2f7; --card: #fff; --label: #000; --secondary: #5f5f66; --sep: #c6c6c8;
+      --tint: #0066cc; --green: #30d158; --radius: 14px;
       color-scheme: light dark;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
     }
     @media (prefers-color-scheme: dark) {
-      :root { --bg: #000; --card: #1c1c1e; --label: #fff; --secondary: #ebebf599; --sep: #38383a; }
+      :root { --bg: #000; --card: #1c1c1e; --label: #fff; --secondary: #ebebf599; --sep: #38383a; --tint: #0a84ff; }
     }
     * { box-sizing: border-box; }
     body { margin: 0; background: var(--bg); color: var(--label); line-height: 1.5; -webkit-font-smoothing: antialiased; }
@@ -134,8 +138,10 @@
 
   <h2>FAQ</h2>
   <div class="group">
+    <div class="row"><details><summary>What is ios27-ui?</summary><p>An open-source agent skill (a SKILL.md file plus references) that teaches AI coding agents Apple's iOS 27 design language: Liquid Glass on the navigation layer, Human Interface Guidelines components, spring motion and native gestures.</p></details></div>
+    <div class="row"><details><summary>Which AI coding tools does it support?</summary><p>Claude Code, Kiro, Codex and other tools that read .agents/skills get the full skill. Cursor, Windsurf and GitHub Copilot get summary rules that point to it.</p></details></div>
+    <div class="row"><details><summary>Does it work for web apps or only SwiftUI?</summary><p>Both. Web apps in React, Next.js or CSS follow the same patterns and behaviour as iOS. For native apps it tells the agent to use SwiftUI and UIKit system components instead of re-skinning them.</p></details></div>
     <div class="row"><details><summary>Is this made by Apple?</summary><p>No. It's an independent open-source project based on Apple's public Human Interface Guidelines and WWDC sessions. Exact glass values aren't published by Apple, so they're approximations.</p></details></div>
-    <div class="row"><details><summary>Does it make a web app "native"?</summary><p>It makes a web app follow the same patterns and behaviour as iOS. For true native apps it tells the agent to use SwiftUI and UIKit system components instead of re-skinning them.</p></details></div>
     <div class="row"><details><summary>How do I contribute?</summary><p>Corrections backed by an Apple source are the most valuable. See <a href="https://github.com/imtiyazakiwat/ios27-ui-skill/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> and the <a href="https://github.com/imtiyazakiwat/ios27-ui-skill/labels/good%20first%20issue">good first issues</a>.</p></details></div>
   </div>
 
