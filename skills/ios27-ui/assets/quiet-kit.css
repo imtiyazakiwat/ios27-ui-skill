@@ -23,7 +23,10 @@
 /* ---- Surfaces ----------------------------------------------------------- */
 .q-page  { background: var(--surface-0); color: var(--ink-1); min-height: 100dvh; font-family: var(--font); }
 .q-tile  { background: var(--surface-1); border: 0.5px solid var(--hairline); box-shadow: var(--shadow-whisper);
-           border-radius: var(--radius-tile); padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
+           border-radius: var(--radius-tile); padding: 16px; display: flex; flex-direction: column; justify-content: space-between;
+           color: inherit; text-decoration: none; font: inherit; text-align: start; }
+/* Interactive tiles: use <a href> (tiles hold headings/paragraphs, which <button> may not contain). */
+a.q-tile, button.q-tile { cursor: pointer; }
 .q-bento { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .q-bento > .q-wide { grid-column: 1 / -1; }
 
@@ -61,7 +64,7 @@
 .q-tabbar { flex: 1; height: 58px; border-radius: 999px; padding: 4px; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; }
 .q-tab    { border-radius: 999px; display: grid; place-items: center; align-content: center; gap: 2px;
             font: 500 11px/13px var(--font); color: var(--ink-1); background: none; border: 0; }
-.q-tab[aria-selected="true"] { background: var(--tab-lens); color: var(--accent); font-weight: 600; }
+.q-tab[aria-current="page"] { background: var(--tab-lens); color: var(--accent); font-weight: 600; }
 .q-search { width: 58px; height: 58px; border-radius: 999px; display: grid; place-items: center; }
 @media (prefers-reduced-transparency: reduce) {
   .q-float { background: var(--surface-1); backdrop-filter: none; -webkit-backdrop-filter: none; }
@@ -79,7 +82,9 @@
 .q-suggest { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-soft); color: var(--accent-on-soft);
              border-radius: 999px; padding: 6px 12px; font: 500 13px/18px var(--font); }
 .q-suggest svg { fill: var(--accent); width: 14px; height: 14px; }
-.q-suggest button { color: var(--accent); font-weight: 600; background: none; border: 0; min-height: 44px; margin: -13px 0; }
+.q-suggest button { position: relative; color: var(--accent); font: inherit; font-weight: 600; background: none; border: 0; padding: 0; }
+/* 44 pt hit area without growing the capsule (same technique as .q-circle) */
+.q-suggest button::after { content: ""; position: absolute; left: -8px; right: -8px; top: 50%; height: 44px; transform: translateY(-50%); }
 .q-cite   { color: var(--accent); font-weight: 700; font-size: 0.7em; vertical-align: super; }
 .q-chip   { display: inline-flex; align-items: center; gap: 6px; background: var(--fill-4); border-radius: 999px; padding: 4px 10px; font: 600 13px/18px var(--font); }
 
@@ -93,9 +98,9 @@
 /* Chrome inside a paper inherits its --surface-1, so pills tint toward the page automatically. */
 
 @media (prefers-reduced-motion: no-preference) {
-  .q-pill > button, .q-circle, .q-tab, .q-tile[role="button"] { transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.25); }
-  .q-pill > button:active, .q-circle:active, .q-tab:active, .q-tile[role="button"]:active { transform: scale(0.96); }
+  .q-pill > button, .q-circle, .q-tab, a.q-tile { transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.25); }
+  .q-pill > button:active, .q-circle:active, .q-tab:active, a.q-tile:active { transform: scale(0.96); }
 }
-:where(.q-pill, .q-tab, .q-circle, .q-tile) :focus-visible, .q-circle:focus-visible, .q-tab:focus-visible {
+:where(.q-pill, .q-suggest) :focus-visible, .q-circle:focus-visible, .q-tab:focus-visible, a.q-tile:focus-visible {
   outline: 2px solid var(--accent); outline-offset: 2px;
 }
