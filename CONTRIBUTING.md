@@ -36,15 +36,26 @@ cd ../my-app && npx /path/to/ios27-ui-x.y.z.tgz
 
 ## Pull requests
 
-1. One topic per PR.
-2. Run `node scripts/validate.mjs`.
-3. Add a line to `CHANGELOG.md` under **Unreleased**.
-4. Fill in the PR template, including sources.
+`main` is protected: nobody pushes to it directly, every change lands through a pull request with a green `ci-ok` check.
+
+1. Fork the repo and create a branch (`fix/sheet-detents`, `feat/search-tab`).
+2. One topic per PR.
+3. Run `node scripts/validate.mjs`.
+4. Add a line to `CHANGELOG.md` under **Unreleased**.
+5. Fill in the PR template, including sources.
+6. A maintainer reviews; PRs are squash-merged, so commit messages inside the PR don't need to be perfect.
+
+New here? Pick a [good first issue](https://github.com/imtiyazakiwat/ios27-ui-skill/labels/good%20first%20issue) and comment that you're taking it.
 
 ## Releases (maintainers)
 
-1. Move **Unreleased** entries in `CHANGELOG.md` under a new version heading.
-2. `npm version patch|minor|major` (creates the commit and tag).
-3. `git push --follow-tags`. The release workflow publishes to npm with provenance.
+1. On a branch: move **Unreleased** entries in `CHANGELOG.md` under a new version heading and run
+   `npm version patch|minor|major --no-git-tag-version`. Open a PR and merge it.
+2. Tag the merged commit on `main` and push the tag (only maintainers can create `v*` tags):
+   ```bash
+   git switch main && git pull
+   git tag "v$(node -p "require('./package.json').version")" && git push origin --tags
+   ```
+3. The release workflow publishes to npm with provenance and creates the GitHub release.
 
 Versioning: patch for wording and fixes, minor for new guidance or targets, major for rule changes that would make an agent produce noticeably different UI, or CLI breaking changes.

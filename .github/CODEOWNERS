@@ -1,0 +1,7 @@
+# Default reviewers for every change
+* @imtiyazakiwat
+
+# Release and security-sensitive files
+/.github/ @imtiyazakiwat
+/bin/ @imtiyazakiwat
+/package.json @imtiyazakiwat

@@ -4,6 +4,9 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## Unreleased
 
+- Community files: Code of Conduct, security policy, CODEOWNERS, feature template, Dependabot for Actions.
+- `main` and `v*` tags protected by rulesets; single `ci-ok` required check.
+
 ## 0.1.0
 
 - Initial release: `ios27-ui` skill (SKILL.md, 7 references, tokens, motion springs, CI screenshot templates).

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and ideas
+    url: https://github.com/imtiyazakiwat/ios27-ui-skill/discussions
+    about: Ask how to use the skill, or float an idea before opening an issue.
+  - name: Security vulnerability
+    url: https://github.com/imtiyazakiwat/ios27-ui-skill/security/advisories/new
+    about: Report privately, not in a public issue.

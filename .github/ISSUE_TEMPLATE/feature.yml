@@ -1,0 +1,36 @@
+name: New guidance, component or install target
+description: Propose something the skill should cover
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - New component or pattern (references/components.md)
+        - SwiftUI / UIKit (references/native-swiftui.md)
+        - Web implementation (references/web-implementation.md)
+        - Motion and gestures
+        - Tokens (tokens.css / motion.ts)
+        - New install target (another AI tool)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What should the skill tell agents to do?
+      description: Concrete rules work best, e.g. "Search lives in the tab bar as its own tab on iOS 27".
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source (if guidance)
+      description: HIG link, WWDC session number, or Apple docs
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I'd like to open the PR for this

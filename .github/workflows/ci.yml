@@ -23,3 +23,11 @@ jobs:
       - run: node scripts/validate.mjs
       - name: Package contents
         run: npm pack --dry-run
+
+  # Single required check for branch rules; stays stable when the matrix changes.
+  ci-ok:
+    if: always()
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - run: test "${{ needs.validate.result }}" = "success"

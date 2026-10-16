@@ -1,5 +1,11 @@
 # ios27-ui
 
+[![npm](https://img.shields.io/npm/v/ios27-ui)](https://www.npmjs.com/package/ios27-ui)
+[![CI](https://github.com/imtiyazakiwat/ios27-ui-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/imtiyazakiwat/ios27-ui-skill/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](CONTRIBUTING.md)
+[![good first issues](https://img.shields.io/github/issues/imtiyazakiwat/ios27-ui-skill/good%20first%20issue)](https://github.com/imtiyazakiwat/ios27-ui-skill/labels/good%20first%20issue)
+
 An agent skill that teaches AI coding agents to design, audit and build app screens the way Apple ships them on iOS 27: Liquid Glass on the navigation layer only, HIG components, spring motion, native gestures. Works for React / Next.js / CSS web apps and for SwiftUI / UIKit.
 
 ```bash
@@ -70,7 +76,7 @@ scripts/validate.mjs   frontmatter, link, size and CLI smoke checks (runs in CI 
 
 ## Contributing
 
-Contributions are welcome, especially corrections backed by Apple sources (HIG pages, WWDC session numbers), SwiftUI API updates, and new component patterns. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Contributions are welcome, especially corrections backed by Apple sources (HIG pages, WWDC session numbers), SwiftUI API updates, and new component patterns. Start with a [good first issue](https://github.com/imtiyazakiwat/ios27-ui-skill/labels/good%20first%20issue), ask in [Discussions](https://github.com/imtiyazakiwat/ios27-ui-skill/discussions), and read [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Disclaimer
 
