@@ -10,6 +10,11 @@ All notable changes to this project are documented here. The format follows [Kee
 - Fonts: serif `--font-serif` (New York → Newsreader) for user content only, tracking tokens, weight rules.
 - `assets/tokens.css`: quiet-surface tokens (surfaces, ink, hairlines, shadows, radii) for light, dark and increased contrast; fixed a bug where an undefined `--font-inter` made the whole font stack fall back to the browser serif.
 - `assets/quiet-kit.css`: framework-neutral classes (tiles, bento, groups, pills, floating dock with scroll-edge fade, sheets, AI suggestions, paper themes).
+- Fluid interfaces (WWDC18 *Designing Fluid Interfaces*): `references/motion.md` rewritten around response, 1:1 tracking, interruption, Apple damping/response ↔ bounce mapping, velocity handoff, momentum projection, rubber-banding, parallel gesture recognition, multimodal feedback and gentler reduced motion.
+- New `assets/gestures.ts`: `project`, `snapTarget`, `rubberband`, `createVelocityTracker`, `lockAxis`, `relativeVelocity` (unit-checked).
+- `assets/motion.ts`: `fling` and `fade` tokens, `appleSpring(ζ, response)`; reduced motion now cross-fades instead of cutting.
+- New `references/principles.md`: the eight WWDC26 principles as decisions and tests, feedback/wayfinding/naming, materials and depth, typography craft (size-specific tracking, leading, Dynamic Type), process.
+- `references/verification.md`: motion review checks (press on pointer-down, grab mid-flight, flick vs. slow drag, rubber-band, reduced motion, frame-by-frame video).
 - `examples/notes-showcase.html` (visual target) and `examples/quiet-kit-demo.html` (real-size reproduction using only the kit).
 
 ## 0.2.0

@@ -1,6 +1,6 @@
 ---
 name: ios27-ui
-description: Designs, audits, converts and builds app screens to match Apple's iOS 27 design language (Liquid Glass navigation layer, HIG components, spring motion, native gestures) in React/Next.js/CSS web apps and in SwiftUI/UIKit. Use when asked to redesign a UI to look or feel like iOS or "native Swift", to convert or update screens to Apple HIG, to clean up a messy UI with duplicate buttons, or to build tab bars, navigation stacks, large titles, sheets, inset-grouped lists, forms, menus, swipe actions or iOS-style animations.
+description: Designs, audits, converts and builds app screens to match Apple's iOS 27 design language (Liquid Glass navigation layer, HIG components, spring motion, native gestures) in React/Next.js/CSS web apps and in SwiftUI/UIKit. Use when asked to redesign a UI to look or feel like iOS or "native Swift", to convert or update screens to Apple HIG, to clean up a messy UI with duplicate buttons, or to build tab bars, navigation stacks, large titles, sheets, inset-grouped lists, forms, menus, swipe actions, iOS-style animations, or fluid gesture physics (drag, flick, momentum, rubber-banding, interruptible springs).
 ---
 
 # iOS 27 UI — design, audit, convert, build
@@ -24,9 +24,9 @@ Do not use it for Material/Android, or for brand-led marketing sites.
 
 ## Operating principles
 
-Apple's HIG principles, applied: **Purpose** (every element serves the screen's job), **Agency** (user in control;
-easy undo, confirm destructive actions), **Familiarity** (use standard patterns), **Simplicity** (fewer elements,
-one obvious action), **Craft** (alignment, states, edge cases), **Delight** (motion that explains).
+Apple's eight principles (WWDC26 *Principles of great design*): **Purpose**, **Agency**, **Responsibility**,
+**Familiarity**, **Flexibility**, **Simplicity** (not minimalism), **Craft**, **Delight**. Name the principle when
+you justify a decision. Decisions, tests, feedback/wayfinding/naming rules: `references/principles.md`.
 
 Hard rules — violating any of these is a defect:
 
@@ -46,7 +46,10 @@ Hard rules — violating any of these is a defect:
    **Fonts:** SF Pro (Inter fallback) for all UI; New York / Newsreader serif only for user content in reading
    contexts; tabular numerals for counts and times. Never two sans families.
 8. **Large title on root screens, inline title + glass back chevron (no title text) on pushed screens.**
-9. **Springs, not eases.** Motion must be interruptible, respect `prefers-reduced-motion`, and never exceed ~0.6 s.
+9. **Springs, not eases. Fluid, not scripted.** Feedback on pointer-down; drags track 1:1 with the grab offset;
+   every animation is interruptible from its live value; release hands off the finger's velocity and picks the
+   target from projected momentum; boundaries rubber-band. Critically damped by default, bounce only after a
+   flick. Reduced motion → cross-fades, not nothing. Settle ≤ ~0.6 s (`references/motion.md`, `assets/gestures.ts`).
 10. **Design for real data**, not the seed: ALL-CAPS names, 10-digit phones, missing/broken photos, long strings,
     zero items, huge numbers. Show placeholders instead of broken images.
 11. **Dark mode and Dynamic-Type-friendly sizes from the start**; hit targets ≥ 44 pt; semantic colors only.
@@ -89,7 +92,7 @@ For web specifics (navigation stack, history sync, overlays) read `references/we
 For real SwiftUI/UIKit read `references/native-swiftui.md` and **use system components — do not re-skin them.**
 
 ### Phase 5 — Motion & gestures (`references/motion.md`)
-Push with parallax and interactive edge-swipe back; sheets that recede the app and drag to dismiss; large-title
+Build the gesture first and tune it by hand. Push with parallax and interactive edge-swipe back; sheets that recede the app and drag to dismiss; large-title
 collapse; press springs; menu origin scaling; Undo HUD; discard-changes guard on dirty forms.
 
 ### Phase 6 — Verify like a skeptic (`references/verification.md`)
@@ -127,9 +130,10 @@ say "follows the same patterns and behaviour".
 | `references/design-tokens.md` | Colors, type scale, metrics, radii, glass recipe, dark mode |
 | `references/visual-language.md` | Quiet-surface aesthetic, fonts, themed backgrounds, layout recipes, a11y guardrails |
 | `references/components.md` | Anatomy and rules for each iOS component |
-| `references/motion.md` | Spring tokens, transitions, gestures, thresholds |
+| `references/principles.md` | Eight principles as decisions, feedback/wayfinding/naming, materials & depth, typography craft, process |
+| `references/motion.md` | Fluid interfaces: response, 1:1, interruption, springs, velocity handoff, projection, rubber-band, haptics, reduced motion |
 | `references/web-implementation.md` | React/Next architecture, code patterns, gotchas |
 | `references/native-swiftui.md` | SwiftUI/UIKit API mapping for iOS 26/27 |
 | `references/verification.md` | CI-as-compiler, screenshot harness, assertions, defect hunting |
-| `assets/` | `tokens.css`, `quiet-kit.css`, `motion.ts`, CI templates |
+| `assets/` | `tokens.css`, `quiet-kit.css`, `motion.ts` (springs), `gestures.ts` (velocity, projection, rubber-band), CI templates |
 | `examples/notes-showcase.html` | Visual target (10 screens, light/dark/themed). Read one `build*Screen` function at a time |

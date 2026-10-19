@@ -12,7 +12,7 @@ Goal: screens that feel like Apple shipped them on iOS 27 (iOS 26 Liquid Glass +
 6. **Large title on root screens; inline title + glass chevron-only back button on pushed screens.**
 7. **Liquid Glass only on the navigation layer** (tab bar, bar buttons, menus, sheets). Never on content. Must stay legible
    when fully opaque (iOS 27 transparency slider, Reduce Transparency) — no reliance on blur.
-8. **Springs, not eases**; interruptible; ≤ 0.6 s; honour `prefers-reduced-motion`. Push with parallax + interactive edge-swipe back;
+8. **Springs, not eases**; feedback on pointer-down; 1:1 drag with grab offset; interruptible from the live value; hand off release velocity and snap to the projected target; rubber-band edges; ≤ 0.6 s; honour `prefers-reduced-motion`. Push with parallax + interactive edge-swipe back;
    large sheets recede the app and drag to dismiss; dirty forms ask "Discard Changes?".
 9. **Quiet surfaces**: separate by tone and space, not lines; 2 % hairline + whisper shadow on cards; chrome uses the content material so it dissolves into the theme/background; one accent; stroke icons. SF Pro/Inter for UI, serif (New York/Newsreader) only for user content.
 10. **Semantic colors only** (blue interactive, green good, orange attention, red destructive); light + dark; 44 pt targets; icons are one family.
@@ -24,4 +24,4 @@ Goal: screens that feel like Apple shipped them on iOS 27 (iOS 26 Liquid Glass +
 Audit every element first (keep / move / merge / remove, with reasons) → define IA → tokens → kit components → screens →
 verify with CI screenshots in light **and** dark and assert flows → report what was **not** verified (device blur, SF Pro, feel).
 
-Details: `{{SKILL_DIR}}/references/` (audit-and-convert, design-tokens, visual-language, components, motion, web-implementation, native-swiftui, verification).
+Details: `{{SKILL_DIR}}/references/` (audit-and-convert, principles, design-tokens, visual-language, components, motion, web-implementation, native-swiftui, verification).

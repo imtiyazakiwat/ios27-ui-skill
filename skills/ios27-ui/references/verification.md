@@ -38,6 +38,15 @@ Capture: every root tab, every detail (scrolled + unscrolled), every sheet, a me
 - Placeholder vs real data (missing photo, ALL-CAPS name) rendering.
 Fix in one batch → push → re-run → compare. Repeat until a pass finds nothing.
 
+## 3b. Motion review (fluid-interface checks)
+Drive these in the browser harness and assert, don't eyeball:
+- Press feedback appears on `pointerdown` (screenshot between down and up).
+- Grab a sheet/drawer mid-animation: it follows the pointer from its current position (no jump).
+- Fast short flick commits; slow long drag below threshold springs back (projection, not position).
+- Drag past a boundary: displacement < pointer travel (rubber-band), springs back on release.
+- `reducedMotion: 'reduce'` context: transitions become fades; nothing slides or bounces.
+- Record a video (`recordVideo`) and step through frames for jumps, strobing and 2–6 px landing strips.
+
 ## 4. Things CI cannot prove — say so in the report
 Real backdrop blur/refraction and SF Pro (headless Linux WebKit), animation feel and frame rate, haptics,
 on-screen keyboard behaviour, installed-PWA/standalone quirks, the OS transparency slider. Ask the user to check these
